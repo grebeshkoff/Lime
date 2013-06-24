@@ -38,6 +38,11 @@ namespace LimeTest.Data.Source
                 }
             }
         }
+
+        public void ParameterTest()
+        {
+
+        }
     }
 }
 

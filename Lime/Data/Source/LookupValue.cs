@@ -10,16 +10,21 @@ namespace Lime.Data.Source
     [TableName("ParamValues")]
     public class LookupValue
     {
+        [PrimaryKey, Identity]
         [MapField("ParamValueId")]
         public int Id;
 
+        [NotNull]
         [MapField("ParamId")]
         public int ParamterId;
+
+        [NotNull]
+        [MapField("ParamValueText")]
+        public string Value;
 
         [Association(ThisKey = "ParamterId", OtherKey = "Id", CanBeNull = false)] 
         public Parameter Parameter;
 
-        [MapField("ParamValueText")]
-        public string Value;
+
     }
 }
