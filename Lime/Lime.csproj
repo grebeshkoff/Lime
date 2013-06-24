@@ -43,9 +43,6 @@
     <Reference Include="BLToolkit.3">
       <HintPath>..\packages\BLToolkit.4.1.21\lib\net35\BLToolkit.3.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -72,7 +69,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\SourceTest\SourceTest.cs" />
     <Compile Include="Data\Source\Gender.cs" />
     <Compile Include="Data\Source\LimeDataBase.cs" />
     <Compile Include="Data\Source\LookupValue.cs" />
