@@ -16,7 +16,7 @@ namespace LimeTest.Data.Source
                 var query = db.Genders;
                 foreach (var gender in query)
                 {
-                    Console.WriteLine("{0} {1}", gender.Id, gender.Name);
+                    Console.WriteLine("{0} {1}", gender.Id , gender.Name);
                 }
             }
         }
@@ -39,9 +39,17 @@ namespace LimeTest.Data.Source
             }
         }
 
+        [Test]
         public void ParameterTest()
         {
-
+            using (var db = new LimeDataBase())
+            {
+                var query = db.Parameters;
+                foreach (var param in query)
+                {
+                    Console.WriteLine("{0} {1}", param.Name, param.Value);
+                }
+            }
         }
     }
 }

@@ -18,7 +18,8 @@ namespace Lime.Data.Source
         [MapField("PersonFullName")]
         public string FullName { get; set; }
 
-        [NotNull] [MapField("PersonCode")] 
+        [NotNull] 
+        [MapField("PersonCode")] 
         public string Code;
 
         [NotNull]

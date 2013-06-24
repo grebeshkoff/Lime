@@ -34,7 +34,6 @@ namespace Lime.Data.Source
         public int PersonId;
 
         [MapValue("ParamValue")] 
-        [Nullable]
         public string Value;
 
         [Association(ThisKey = "PersonId", OtherKey = "Id")] 
