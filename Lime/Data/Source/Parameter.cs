@@ -9,5 +9,6 @@ namespace Lime.Data.Source
     [TableName("Params")]
     public class Parameter
     {
+
     }
 }

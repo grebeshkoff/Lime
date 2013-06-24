@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using BLToolkit.DataAccess;
-
+ 
 
 using BLToolkit.Data;
 using BLToolkit.Mapping;
@@ -15,8 +15,11 @@ namespace Lime.Data.Source
     public class Gender
     {
         [PrimaryKey, Identity]
-        public int GenderId;
+        [MapField("GenderId")]
+        public int Id;
+
         [NotNull]
-        public string GenderName;
+        [MapField("GenderName")]
+        public string Name;
     }
 }

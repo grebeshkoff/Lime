@@ -11,27 +11,25 @@ namespace Lime.Data.Source
     [TableName("Persons")]
     public class Person
     {
-        private string _personCode ;
-
         [PrimaryKey, Identity]
-        public int PersonId;
+        [MapField("PersonId")]
+        public int Id;
+
         [NotNull]
-        public string PersonFullName { get; set; }
+        [MapField("PersonFullName")]
+        public string FullName { get; set; }
+
+        [NotNull] [MapField("PersonCode")] 
+        public string Code;
+
         [NotNull]
-        public string PersonCode {
-            get { return _personCode; }
-            set
-            {
-                //Todo: Check count and signs
-                _personCode = value;
-            }
-        }
+        [MapField("PersonGender")] 
+        public int GenderId;
 
+        [Association(ThisKey = "GenderId", OtherKey = "Id")]
+        public Gender Gender;
 
-        [Association(ThisKey = "PersonGender", OtherKey = "GenderId")]
-        public Gender PersonGender;
-
-        [Association(ThisKey = "PersonId", OtherKey = "PersonId")]
+        [Association(ThisKey = "Id", OtherKey = "PersonId")]
         public List<Parameter> Parameters;
     }
 }
