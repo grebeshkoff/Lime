@@ -27,7 +27,7 @@ namespace Lime.Data.Source
             {
                 using (var db = new LimeDataBase())
                 {
-                    return GetTable<Gender>(); ;
+                    return GetTable<Gender>();
                 }
             }
         }
