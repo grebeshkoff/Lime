@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+    <siteMapNode url="~/Default.aspx" title="Сайт для сбора данных о клиентах"  description="">
+        <siteMapNode url="http://localhost:51211/Default.aspx" title="Главная"  description="" />
+        <siteMapNode url="http://localhost:51211/Clients.aspx" title="Клиенты"  description="" />
+        <!--<siteMapNode url="http://localhost:51211/Default.aspx" title="Анкеты"  description="" />
+        <siteMapNode url="http://localhost:51211/Default.aspx" title="Редактор Анкет"  description="" />-->
+    </siteMapNode>
+</siteMap>
