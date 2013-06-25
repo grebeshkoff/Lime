@@ -16,10 +16,10 @@ namespace Lime.Data.Source
     {
         private const string WorkConnectionString =
             @"Data Source=CO-PRG-05\SHAREPOINT;Initial Catalog=LIMEBASE;Integrated Security=True";
-        private const string ConnectionString = @"Server=MAIN-PC\MAINPCSQL;Database=LIMEBASE;Integrated Security=SSPI";
+        private const string HomeConnectionString = @"Server=MAIN-PC\MAINPCSQL;Database=LIMEBASE;Integrated Security=SSPI";
 
         public LimeDataBase()
-            : base(new SqlConnection(WorkConnectionString))
+            : base(new SqlConnection(HomeConnectionString))
         {
         }
 

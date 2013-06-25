@@ -20,30 +20,32 @@ namespace Lime.Controls
         {
             using (var db = new LimeDataBase())
             {
-                var genders = db.Genders;
+                //var genders = db.Genders;
                 var query = from person in db.Persons
                             select new
                             {
                                 FullName = person.FullName,
                                 Code = person.Code,
                                 GenderName = person.Gender.Name
-                                
                             };
                 
                 ClientsRadGrid.DataSource = query;
             }
         }
 
-        protected void ClientsRadGrid_ItemCreated(object sender, GridItemEventArgs e)
-        {
-            //throw new NotImplementedException();
-        }
 
         protected void ClientsRadGrid_ItemDataBound(object sender, GridItemEventArgs e)
         {
-            if (e.Item is GridDataItem)
+            if (e.Item is GridEditableItem && e.Item.IsInEditMode)
             {
-                
+                var item = e.Item as GridEditableItem;
+
+                var list = item.FindControl("Gender") as DropDownList;
+
+                using (var db = new LimeDataBase())
+                {
+                    list.DataSource = db.Genders;
+                }
             }
         }
     }
