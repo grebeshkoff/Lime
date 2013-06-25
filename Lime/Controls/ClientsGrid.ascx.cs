@@ -26,7 +26,7 @@ namespace Lime.Controls
                             {
                                 FullName = person.FullName,
                                 Code = person.Code,
-                                Gender = person.Gender.Name
+                                GenderName = person.Gender.Name
                                 
                             };
                 

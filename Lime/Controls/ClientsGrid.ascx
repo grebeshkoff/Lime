@@ -3,7 +3,7 @@
 <asp:SqlDataSource ID="GendersDataSource" runat="server"
             DataSourceMode="DataReader"
             ConnectionString="<%$ ConnectionStrings:LimeWork %>"
-            SelectCommand="SELECT   genderId, genderName FROM genders"></asp:SqlDataSource>
+            SelectCommand="SELECT [genderId], [genderName] FROM [genders]"></asp:SqlDataSource>
 
 <telerik:RadAjaxManager ID="ClientsGridAjaxManager" runat="server">
         <AjaxSettings>
@@ -32,13 +32,19 @@
 
         <MasterTableView AutoGenerateColumns="false" Width="100%">
             <Columns>
-                <telerik:GridDropDownColumn
+                <%--<telerik:GridDropDownColumn
                     UniqueName="Gender" 
                     DataField="Gender" 
                     HeaderText="Пол"
-                    ListTextField="genderName" ListValueField="genderId"
+                    ListTextField="genderName" 
+                    ListValueField="genderId"
                     DropDownControlType="DropDownList">
-                </telerik:GridDropDownColumn>
+                </telerik:GridDropDownColumn>--%>
+                <telerik:GridBoundColumn 
+                    UniqueName="GenderName" 
+                    DataField="GenderName" 
+                    HeaderText="Пол">
+                </telerik:GridBoundColumn>
 
                 <telerik:GridBoundColumn 
                     UniqueName="FullName" 
