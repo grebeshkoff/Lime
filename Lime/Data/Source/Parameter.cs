@@ -25,7 +25,7 @@ namespace Lime.Data.Source
         [MapField("ParamName")]
         public string Name;
 
-        [NotNull] 
+        [NotNull]
         [MapField("ParamType")] 
         public ParameterType Type;
 
@@ -33,8 +33,11 @@ namespace Lime.Data.Source
         [MapField("ParamPersonId")] 
         public int PersonId;
 
-        [MapValue("ParamValue")] 
-        public string Value;
+        [NotNull]
+        [MapValue("ParamValue")]
+        public StringBuilder Value { get; set; }
+
+
 
         [Association(ThisKey = "PersonId", OtherKey = "Id")] 
         public Person Person;

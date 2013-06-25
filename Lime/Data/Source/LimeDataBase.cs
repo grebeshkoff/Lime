@@ -12,12 +12,14 @@ using BLToolkit.Mapping;
 
 namespace Lime.Data.Source
 {
-    public class LimeDataBase: DbManager 
+    public class LimeDataBase: DbManager
     {
+        private const string WorkConnectionString =
+            @"Data Source=CO-PRG-05\SHAREPOINT;Initial Catalog=LIMEBASE;Integrated Security=True";
         private const string ConnectionString = @"Server=MAIN-PC\MAINPCSQL;Database=LIMEBASE;Integrated Security=SSPI";
 
         public LimeDataBase()
-            : base(new SqlConnection(ConnectionString))
+            : base(new SqlConnection(WorkConnectionString))
         {
         }
 
@@ -25,10 +27,7 @@ namespace Lime.Data.Source
         {
             get
             {
-                using (var db = new LimeDataBase())
-                {
-                    return GetTable<Gender>();
-                }
+                return GetTable<Gender>();
             }
         }
 
@@ -36,10 +35,7 @@ namespace Lime.Data.Source
         {
             get
             {
-                using (var db = new LimeDataBase())
-                {
-                    return GetTable<Person>(); 
-                }
+                return GetTable<Person>(); 
             }
         }
 
@@ -47,10 +43,7 @@ namespace Lime.Data.Source
         {
             get
             {
-                using (var db = new LimeDataBase())
-                {
-                    return GetTable<Parameter>();
-                }
+                return GetTable<Parameter>();
             }
         }
 

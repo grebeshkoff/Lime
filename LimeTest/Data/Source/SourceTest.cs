@@ -44,10 +44,15 @@ namespace LimeTest.Data.Source
         {
             using (var db = new LimeDataBase())
             {
-                var query = db.Parameters;
+                var query = from param in db.Parameters
+                            select new
+                                {
+                                    Person = param.Person
+                                };
+                ;
                 foreach (var param in query)
                 {
-                    Console.WriteLine("{0} {1}", param.Name, param.Value);
+                    Console.WriteLine("{0}", param.Person.FullName);
                 }
             }
         }
