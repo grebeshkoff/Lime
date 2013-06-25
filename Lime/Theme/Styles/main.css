@@ -1,0 +1,43 @@
+﻿body {
+    background-color: lightgray
+}
+
+#workspace {
+    background-color: white;
+    border-right: solid 1px #696969;
+    border-left: solid 1px #696969;
+    height: 850px;
+    width: 100%;
+}
+
+#footer {
+    height : 50px;
+    border-right: solid 1px #696969;
+    border-left: solid 1px #696969;
+    width: 100%;
+    background-image:url('../Images/footer.png');
+}
+
+#copyright {
+    color: whitesmoke;
+    float: right;
+    padding-right: 20px;
+    padding-top: 15px;
+    font-family: 'Text Me One', sans-serif;
+    display: block;
+}
+
+
+#header {
+    background-image:url('../Images/header.png');
+    height: 100px;
+}
+
+#logo {
+    font-family: 'Marcellus SC', serif;
+    font-size: 60px;
+    color: whitesmoke;
+    margin-left: 30px;
+    padding-top: 10px;
+    
+}

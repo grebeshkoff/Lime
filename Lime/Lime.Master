@@ -1,0 +1,62 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Lime.master.cs" Inherits="Lime.Lime" %>
+
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Lime</title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+        <link href='http://fonts.googleapis.com/css?family=Marcellus+SC' rel='stylesheet' type='text/css' />
+        <link href='http://fonts.googleapis.com/css?family=Text+Me+One' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="/Theme/Styles/main.css" type="text/css" />
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="main" runat="server">
+        <telerik:RadFormDecorator ID="LimeFormDecorator" runat="server" DecoratedControls="all" DecorationZoneID="workspace">
+            </telerik:RadFormDecorator>
+        <div id="workspace">
+
+            <div id="header"><div id="logo">Sample Web Site</div></div>
+            <telerik:RadScriptManager ID="LimeScriptManager" runat="server"></telerik:RadScriptManager>
+           
+
+        
+            <div id="rfd-zone">
+
+            
+                <div id="menu">
+                    <telerik:RadMenu ID="MainMenu" Runat="server" Skin="Silk" Width="100%">
+                        <Items>
+                            <telerik:RadMenuItem runat="server" Text="Главная" NavigateUrl="Default.aspx">
+                                
+                            </telerik:RadMenuItem>
+                            <telerik:RadMenuItem runat="server" Text="Клиенты" NavigateUrl="Clients.aspx">
+                            </telerik:RadMenuItem>
+                            <telerik:RadMenuItem runat="server" Text="Анкеты">
+                            </telerik:RadMenuItem>
+                            <telerik:RadMenuItem runat="server" Text="Редактор Анкет">
+                            </telerik:RadMenuItem>
+                        </Items>
+                    </telerik:RadMenu>
+                </div>
+                <div>
+                    <asp:ContentPlaceHolder ID="PlaceHolderMain" runat="server" >
+        
+                    </asp:ContentPlaceHolder>
+                </div>
+
+            </div>
+            
+        </div>
+        <telerik:RadFormDecorator ID="RadFormDecorator1" runat="server" DecoratedControls="all" DecorationZoneID="footer">
+            </telerik:RadFormDecorator>
+        <div id="footer">
+            <div id="copyright">© 2013 All rights reserved</div>
+        </div>
+
+    </form>
+</body>
+</html>
