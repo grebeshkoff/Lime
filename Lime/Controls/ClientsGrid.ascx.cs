@@ -36,17 +36,17 @@ namespace Lime.Controls
 
         protected void ClientsRadGrid_ItemDataBound(object sender, GridItemEventArgs e)
         {
-            if (e.Item is GridEditableItem && e.Item.IsInEditMode)
-            {
-                var item = e.Item as GridEditableItem;
+        //    if (e.Item is GridEditableItem && e.Item.IsInEditMode)
+        //    {
+        //        var item = e.Item as GridEditableItem;
 
-                var list = item.FindControl("Gender") as DropDownList;
+        //        var list = DropDownList;
 
-                using (var db = new LimeDataBase())
-                {
-                    list.DataSource = db.Genders;
-                }
-            }
+        //        using (var db = new LimeDataBase())
+        //        {
+        //            list.DataSource = db.Genders;
+        //        }
+        //    }
         }
     }
 }

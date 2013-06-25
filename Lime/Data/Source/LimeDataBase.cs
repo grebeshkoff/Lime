@@ -31,11 +31,19 @@ namespace Lime.Data.Source
             }
         }
 
-        public Table<Person> Persons
+        private Table<Person> _Persons
         {
             get
             {
                 return GetTable<Person>(); 
+            }
+        }
+
+        public class Persons: List<Person>
+        {
+            public Persons(Table<Person> _Persons)
+            {
+                return _Persons.ToList();
             }
         }
 
