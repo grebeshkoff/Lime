@@ -19,7 +19,7 @@ namespace Lime.Data.Source
         private const string HomeConnectionString = @"Server=MAIN-PC\MAINPCSQL;Database=LIMEBASE;Integrated Security=SSPI";
 
         public LimeDataBase()
-            : base(new SqlConnection(HomeConnectionString))
+            : base(new SqlConnection(WorkConnectionString))
         {
         }
 
@@ -31,7 +31,7 @@ namespace Lime.Data.Source
             }
         }
 
-        private Table<Person> _Persons
+        public Table<Person> Persons
         {
             get
             {
@@ -39,13 +39,6 @@ namespace Lime.Data.Source
             }
         }
 
-        public class Persons: List<Person>
-        {
-            public Persons(Table<Person> _Persons)
-            {
-                return _Persons.ToList();
-            }
-        }
 
         public Table<Parameter> Parameters
         {
@@ -66,6 +59,12 @@ namespace Lime.Data.Source
             }
         }
 
+        public Gender GetGenderById(int id)
+        {
+            return (from g in Genders
+                   where g.Id == id
+                   select g).First();
+        }
 
     }
 }

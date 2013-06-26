@@ -16,7 +16,7 @@
     
     <telerik:RadGrid
         Skin="Silk" 
-        Width="99%" 
+
         
         ID="ClientsRadGrid" 
         runat="server" 
@@ -26,11 +26,18 @@
         AllowSorting="True" 
         CellSpacing="0" 
         Culture="ru-RU" 
-        GridLines="None">
+        GridLines="None" 
+        AllowPaging="True" 
+        AutoGenerateColumns="False"
+        EnableHeaderContextFilterMenu="true" 
+        EnableHeaderContextMenu="true"
+        ShowGroupPanel="True">
         
         <PagerStyle Mode="NextPrevAndNumeric"></PagerStyle>
 
-        <MasterTableView AutoGenerateColumns="false" Width="100%">
+
+        <MasterTableView Width="100%" ShowFooter="True">
+
             <Columns>
                 
                 <telerik:GridBoundColumn 
@@ -45,20 +52,13 @@
                     HeaderText="ИНН">
                 </telerik:GridBoundColumn>
 
-                <telerik:GridBoundColumn 
-                    UniqueName="GenderName" 
-                    DataField="GenderName" 
-                    HeaderText="Пол">
-                </telerik:GridBoundColumn>                
-
                 <telerik:GridDropDownColumn
-                    ColumnEditorID="Gender"
                     UniqueName="Gender"
-                    ListTextField="Gender.Name" 
-                    ListValueField="Gender.Id" 
+                    HeaderText="Пол"
+                    ListTextField="Name"
+                    ListValueField="Id"
                     DropDownControlType="DropDownList"
-                    HeaderText="Пол" 
-                    DataField="GenderName">
+                    DataField="Gender">
                 </telerik:GridDropDownColumn>
                 
                 <%--<telerik:GridDropDownColumn
@@ -96,5 +96,11 @@
                 <EditColumn ButtonType="ImageButton">
                 </EditColumn>
             </EditFormSettings>
+
         </MasterTableView>
     </telerik:RadGrid>
+
+
+
+
+

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -20,33 +21,43 @@ namespace Lime.Controls
         {
             using (var db = new LimeDataBase())
             {
-                //var genders = db.Genders;
-                var query = from person in db.Persons
-                            select new
-                            {
-                                FullName = person.FullName,
-                                Code = person.Code,
-                                GenderName = person.Gender.Name
-                            };
-                
-                ClientsRadGrid.DataSource = query;
+                var genders = db.Genders;
+
+
+
+
+                ClientsRadGrid.DataSource = db.Persons;
+
             }
         }
 
 
         protected void ClientsRadGrid_ItemDataBound(object sender, GridItemEventArgs e)
         {
-        //    if (e.Item is GridEditableItem && e.Item.IsInEditMode)
-        //    {
-        //        var item = e.Item as GridEditableItem;
-
-        //        var list = DropDownList;
-
-        //        using (var db = new LimeDataBase())
-        //        {
-        //            list.DataSource = db.Genders;
-        //        }
-        //    }
+            using (var db = new LimeDataBase())
+            {
+                if (e.Item is GridDataItem && !e.Item.IsInEditMode)
+                {
+                    var item = e.Item as GridDataItem;
+                    var p = item.DataItem as Person;
+                    item["Gender"].Text = db.GetGenderById(p.GenderId).Name;
+                }
+                if (e.Item is GridEditableItem && (e.Item as GridEditableItem).IsInEditMode)
+                {
+                    var editedItem = e.Item as GridEditableItem;
+                    var editMan = editedItem.EditManager;
+                    var editor = editMan.GetColumnEditor("Gender") as GridDropDownColumnEditor;
+                    if (editor != null)
+                    {
+                        editor.DataSource = db.Genders.ToList();
+                        editor.DataBind();
+                        var person = e.Item.DataItem as Person;
+                        if (person != null)
+                            editor.SelectedValue = person.GenderId.ToString();
+                    }
+                    
+                }
+            } 
         }
     }
 }

@@ -16,10 +16,12 @@ namespace Lime.Data.Source
     {
         [PrimaryKey, Identity]
         [MapField("GenderId")]
-        public int Id;
+        public int Id { get; set; }
+
+
 
         [NotNull]
         [MapField("GenderName")]
-        public string Name;
+        public string Name { get; set; }
     }
 }

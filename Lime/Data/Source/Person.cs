@@ -12,24 +12,26 @@ namespace Lime.Data.Source
     {
         [PrimaryKey, Identity]
         [MapField("PersonId")]
-        public int Id;
+        public int Id { get; set; }
+
+    
 
         [NotNull]
         [MapField("PersonFullName")]
         public string FullName { get; set; }
 
         [NotNull] 
-        [MapField("PersonCode")] 
-        public string Code;
+        [MapField("PersonCode")]
+        public string Code { get; set; }
 
         [NotNull]
-        [MapField("PersonGender")] 
-        public int GenderId;
+        [MapField("PersonGender")]
+        public int GenderId { get; set; }
 
         [Association(ThisKey = "GenderId", OtherKey = "Id")]
-        public Gender Gender;
+        public Gender Gender { get; set; }
 
         [Association(ThisKey = "Id", OtherKey = "PersonId")]
-        public List<Parameter> Parameters;
+        public List<Parameter> Parameters { get; set; }
     }
 }
