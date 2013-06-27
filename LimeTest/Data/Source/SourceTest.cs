@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Lime.Data.Source;
+using Lime.Data.Model;
 using NUnit.Framework;
 
 namespace LimeTest.Data.Source
@@ -74,6 +75,34 @@ namespace LimeTest.Data.Source
                 {
                     Console.WriteLine("{0} {1}", val.Person.FullName, val.Value);
                 }
+            }
+        }
+
+        [Test]
+        public void PersonInsertTest()
+        {
+            using (var db = new LimeDataBase())
+            {
+                var p = new Person()
+                    {
+                        FullName = "Петр Петрович Петров",
+                        Code = "158475698758",
+                        GenderId = 1,
+                    };
+                p.Gender = db.GetGenderById(p.GenderId);
+            }
+        }
+
+        [Test]
+        public void PersonsTest()
+        {
+            var persons = new Persons();
+
+            var q = persons.GetPersonByFullName("Ив");
+
+            foreach (var person in q)
+            {
+                Console.WriteLine("{0} : {1}", person.FullName, person.Code);
             }
         }
     }

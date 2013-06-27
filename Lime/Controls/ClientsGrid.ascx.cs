@@ -22,12 +22,7 @@ namespace Lime.Controls
             using (var db = new LimeDataBase())
             {
                 var genders = db.Genders;
-
-
-
-
                 ClientsRadGrid.DataSource = db.Persons;
-
             }
         }
 
@@ -58,6 +53,12 @@ namespace Lime.Controls
                     
                 }
             } 
+        }
+
+        protected void ClientsRadGrid_DeleteCommand(object sender, GridCommandEventArgs e)
+        {
+            
+            //throw new NotImplementedException();
         }
     }
 }

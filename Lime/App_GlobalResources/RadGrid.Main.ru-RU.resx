@@ -151,7 +151,7 @@
     <value>Сум</value>
   </data>
   <data name="BetweenText" xml:space="preserve">
-    <value>Между</value>
+    <value>В диапазоне</value>
   </data>
   <data name="CancelChangesText" xml:space="preserve">
     <value>Отменить изменения</value>
@@ -268,10 +268,10 @@
     <value />
   </data>
   <data name="GreaterThanOrEqualToText" xml:space="preserve">
-    <value>GreaterThanOrEqualTo</value>
+    <value>Больше или равно</value>
   </data>
   <data name="GreaterThanText" xml:space="preserve">
-    <value>Больше чем</value>
+    <value>Больше</value>
   </data>
   <data name="GroupByFieldsSeparator" xml:space="preserve">
     <value>; </value>
@@ -406,16 +406,16 @@
     <value>Следующая</value>
   </data>
   <data name="NoDetailRecordsText" xml:space="preserve">
-    <value>No child records to display.</value>
+    <value>Нет дочерних записей для отображения.</value>
   </data>
   <data name="NoFilterText" xml:space="preserve">
     <value>Снять фильтр</value>
   </data>
   <data name="NoMasterRecordsText" xml:space="preserve">
-    <value>No records to display.</value>
+    <value>Нет записей для отображения.</value>
   </data>
   <data name="NotBetweenText" xml:space="preserve">
-    <value>NotBetween</value>
+    <value>Вне диапазона</value>
   </data>
   <data name="NotEqualToText" xml:space="preserve">
     <value>NotEqualTo</value>

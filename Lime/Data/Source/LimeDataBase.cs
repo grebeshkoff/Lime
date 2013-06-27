@@ -19,7 +19,7 @@ namespace Lime.Data.Source
         private const string HomeConnectionString = @"Server=MAIN-PC\MAINPCSQL;Database=LIMEBASE;Integrated Security=SSPI";
 
         public LimeDataBase()
-            : base(new SqlConnection(WorkConnectionString))
+            : base(new SqlConnection(HomeConnectionString))
         {
         }
 

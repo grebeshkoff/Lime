@@ -22,6 +22,8 @@
         runat="server" 
         OnNeedDataSource="ClientsRadGrid_NeedDataSource"
         OnItemDataBound="ClientsRadGrid_ItemDataBound"
+        OnDeleteCommand="ClientsRadGrid_DeleteCommand"
+
         AllowFilteringByColumn="True" 
         AllowSorting="True" 
         CellSpacing="0" 

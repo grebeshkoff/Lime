@@ -69,6 +69,7 @@
     <Content Include="Clients.aspx" />
     <Content Include="Controls\ClientsGrid.ascx" />
     <Content Include="Default.aspx" />
+    <Content Include="Global.asax" />
     <Content Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
@@ -104,7 +105,7 @@
     <Compile Include="Controls\ClientsGrid.ascx.designer.cs">
       <DependentUpon>ClientsGrid.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Data\Source\Persons.cs" />
+    <Compile Include="Data\Model\Persons.cs" />
     <Compile Include="Data\Source\Gender.cs" />
     <Compile Include="Data\Source\LimeDataBase.cs" />
     <Compile Include="Data\Source\LookupValue.cs" />
@@ -117,6 +118,9 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
     <Compile Include="Lime.Master.cs">
       <DependentUpon>Lime.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -128,7 +132,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Data\Model\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -181,7 +184,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
