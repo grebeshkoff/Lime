@@ -105,7 +105,6 @@
     <Compile Include="Controls\ClientsGrid.ascx.designer.cs">
       <DependentUpon>ClientsGrid.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Data\Model\Persons.cs" />
     <Compile Include="Data\Source\Gender.cs" />
     <Compile Include="Data\Source\LimeDataBase.cs" />
     <Compile Include="Data\Source\LookupValue.cs" />
@@ -184,7 +183,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

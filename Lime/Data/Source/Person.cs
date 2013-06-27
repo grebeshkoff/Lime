@@ -14,8 +14,6 @@ namespace Lime.Data.Source
         [MapField("PersonId")]
         public int Id { get; set; }
 
-    
-
         [NotNull]
         [MapField("PersonFullName")]
         public string FullName { get; set; }

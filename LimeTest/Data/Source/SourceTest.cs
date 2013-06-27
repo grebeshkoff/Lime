@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Lime.Data.Source;
-using Lime.Data.Model;
 using NUnit.Framework;
 
 namespace LimeTest.Data.Source
@@ -28,7 +27,7 @@ namespace LimeTest.Data.Source
             using (var db = new LimeDataBase())
             {
                 var query = from person in db.Persons
-                            select new
+                            select new Person()
                                 {
                                     FullName = person.FullName,
                                     Code = person.Code,
@@ -85,26 +84,40 @@ namespace LimeTest.Data.Source
             {
                 var p = new Person()
                     {
-                        FullName = "Петр Петрович Петров",
-                        Code = "158475698758",
-                        GenderId = 1,
+                        FullName = "Мария Кюри",
+                        Code = "354789658965",
+                        GenderId = 2
                     };
-                p.Gender = db.GetGenderById(p.GenderId);
+
+                Console.WriteLine(@"Last Identity : {0}", db.AddPerson(p));
+                PersonTest();
             }
         }
 
         [Test]
-        public void PersonsTest()
+        public void PersonUpdateTest()
         {
-            var persons = new Persons();
-
-            var q = persons.GetPersonByFullName("Ив");
-
-            foreach (var person in q)
+            using (var db = new LimeDataBase())
             {
-                Console.WriteLine("{0} : {1}", person.FullName, person.Code);
+                var p = db.Persons.ElementAt(2);
+                p.FullName = "Губка Боб Квадратные Штаны";
+                p.GenderId = 1;
+                Console.WriteLine(@"Last Identity : {0}", db.UpdatePerson(p));
             }
+            PersonTest();
         }
+
+        [Test]
+        public void PersonDeleteTest()
+        {
+            using (var db = new LimeDataBase())
+            {
+                var p = db.Persons.ElementAt(4);
+                db.DeletePerson(p);
+            }
+            PersonTest();
+        }
+
     }
 }
 

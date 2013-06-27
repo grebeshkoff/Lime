@@ -10,6 +10,7 @@ using BLToolkit.Data.Linq;
 using BLToolkit.DataAccess;
 using BLToolkit.Mapping;
 
+
 namespace Lime.Data.Source
 {
     public class LimeDataBase: DbManager
@@ -19,7 +20,7 @@ namespace Lime.Data.Source
         private const string HomeConnectionString = @"Server=MAIN-PC\MAINPCSQL;Database=LIMEBASE;Integrated Security=SSPI";
 
         public LimeDataBase()
-            : base(new SqlConnection(HomeConnectionString))
+            : base(new SqlConnection(WorkConnectionString))
         {
         }
 
@@ -35,10 +36,10 @@ namespace Lime.Data.Source
         {
             get
             {
-                return GetTable<Person>(); 
+                return GetTable<Person>();
             }
         }
-
+    
 
         public Table<Parameter> Parameters
         {
@@ -66,5 +67,43 @@ namespace Lime.Data.Source
                    select g).First();
         }
 
+        public int AddPerson(Person person)
+        {
+            return SetCommand(@"
+                        INSERT INTO Persons
+                            ( PersonCode,  PersonFullName,  PersonGender)
+                        VALUES
+                            ( @PersonCode,  @PersonFullName,  @PersonGender)
+                        SELECT Cast(SCOPE_IDENTITY() as int)",
+                        CreateParameters(person))
+                    .ExecuteScalar<int>();
+        }
+
+        public int UpdatePerson(Person person)
+        {
+            return SetCommand(@"
+                        UPDATE
+                            Persons
+                        SET
+                            PersonCode   = @PersonCode,
+                            PersonFullName  = @PersonFullName,
+                            PersonGender = @PersonGender
+                        WHERE
+                            PersonId = @PersonId",
+            CreateParameters(person)).ExecuteNonQuery();
+        }
+
+        public void DeletePerson(int id)
+        {
+            SetCommand("DELETE FROM Persons WHERE PersonId = @id",
+                        Parameter("@id", id))
+                    .ExecuteNonQuery();
+        }
+
+
+        public void DeletePerson(Person person)
+        {
+            DeletePerson(person.Id);
+        }
     }
 }

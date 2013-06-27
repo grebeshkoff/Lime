@@ -9,7 +9,7 @@
     <title>Lime</title>
     <asp:ContentPlaceHolder ID="head" runat="server">
         <link href='http://fonts.googleapis.com/css?family=Marcellus+SC' rel='stylesheet' type='text/css' />
-        <link href='http://fonts.googleapis.com/css?family=Text+Me+One' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Text+Me+One' rel='stylesheet' type='text/css' />
         <link rel="stylesheet" href="/Theme/Styles/main.css" type="text/css" />
     </asp:ContentPlaceHolder>
 </head>

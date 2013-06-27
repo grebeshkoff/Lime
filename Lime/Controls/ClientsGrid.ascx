@@ -1,5 +1,14 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ClientsGrid.ascx.cs" Inherits="Lime.Controls.ClientsGrid" %>
 
+
+    <telerik:RadCodeBlock ID="RadCodeBlock1" runat="server">
+        <script type="text/javascript">
+            function RowDblClick(sender, eventArgs) {
+                sender.get_masterTableView().editItem(eventArgs.get_itemIndexHierarchical());
+            }
+        </script>
+    </telerik:RadCodeBlock>
+
     <telerik:RadAjaxManager ID="ClientsGridAjaxManager" runat="server">
         <AjaxSettings>
             <telerik:AjaxSetting AjaxControlID="ClientsRadGrid">
@@ -10,6 +19,14 @@
             </telerik:AjaxSetting>
         </AjaxSettings>
     </telerik:RadAjaxManager>
+
+    <asp:UpdatePanel ID="NotifikationPanel" runat="server" UpdateMode="Conditional">
+        <ContentTemplate>
+            <telerik:RadNotification ID="ErrorNotification" runat="server" Text="Действие завершилось ошибкой!" RenderMode="Lightweight" Position="Center"
+                AutoCloseDelay="0" Width="350" Title="Ошибка приложения" EnableRoundedCorners="False" Skin="Silk" ContentIcon="delete" TitleIcon="delete">
+            </telerik:RadNotification>
+        </ContentTemplate>
+    </asp:UpdatePanel>
 
     <telerik:RadAjaxLoadingPanel ID="ClientsAjaxLoadingPanel" runat="server">
     </telerik:RadAjaxLoadingPanel>
@@ -23,8 +40,13 @@
         OnNeedDataSource="ClientsRadGrid_NeedDataSource"
         OnItemDataBound="ClientsRadGrid_ItemDataBound"
         OnDeleteCommand="ClientsRadGrid_DeleteCommand"
+        OnInsertCommand="ClientsRadGrid_InsertCommand"
+        OnItemCommand="ClientsRadGrid_ItemCommand"
+        OnUpdateCommand="ClientsRadGrid_OnUpdateCommand"
 
         AllowFilteringByColumn="True" 
+        AllowMultiRowSelection="False"
+        
         AllowSorting="True" 
         CellSpacing="0" 
         Culture="ru-RU" 
@@ -33,14 +55,39 @@
         AutoGenerateColumns="False"
         EnableHeaderContextFilterMenu="true" 
         EnableHeaderContextMenu="true"
-        ShowGroupPanel="True">
+        EnableAJAX="True" 
+        
+        >
+        
+        <ClientSettings EnableRowHoverStyle="true">
+            <Selecting AllowRowSelect="True"></Selecting>
+        </ClientSettings>
         
         <PagerStyle Mode="NextPrevAndNumeric"></PagerStyle>
 
 
-        <MasterTableView Width="100%" ShowFooter="True">
+        <MasterTableView 
+            Width="100%" 
+            GridLines="None" 
+            CommandItemDisplay="Top" 
+            DataKeyNames="Id" 
+            InsertItemDisplay="Top"
+            InsertItemPageIndexAction="ShowItemOnFirstPage">
+            <CommandItemSettings>
+                
+            </CommandItemSettings>
 
             <Columns>
+                <telerik:GridClientSelectColumn UniqueName="ClientSelectColumn">
+                </telerik:GridClientSelectColumn>
+                
+                <telerik:GridBoundColumn 
+                    UniqueName="Id" 
+                    DataField="Id" 
+                    HeaderText="ИД"
+                    ReadOnly="True"
+                    Visible="False">
+                </telerik:GridBoundColumn>
                 
                 <telerik:GridBoundColumn 
                     UniqueName="FullName" 
@@ -63,25 +110,6 @@
                     DataField="Gender">
                 </telerik:GridDropDownColumn>
                 
-                <%--<telerik:GridDropDownColumn
-                    UniqueName="Gender" 
-                    DataField="Gender" 
-                    HeaderText="Пол"
-                    ListTextField="genderName" 
-                    ListValueField="genderId"
-                    DropDownControlType="RadComboBox">
-                </telerik:GridDropDownColumn>
-                --%>
-                <%--<telerik:GridDropDownColumn 
-                    UniqueName="ddlQuantity"
-                    ListTextField="Quantity" 
-                    ListValueField="Quantity"
-                    ListDataMember="Orders" 
-                    DataField="Quantity" 
-                    HeaderText="Quantities in stock"
-                    DropDownControlType="RadComboBox">
-                </telerik:GridDropDownColumn>--%>
-
                 <telerik:GridEditCommandColumn 
                     UniqueName="EditCommandColumn" 
                     ButtonType="ImageButton">
@@ -99,7 +127,12 @@
                 </EditColumn>
             </EditFormSettings>
 
+            
+            <CommandItemSettings AddNewRecordText="Добавить клиента"></CommandItemSettings>
         </MasterTableView>
+        <ClientSettings>
+            <ClientEvents OnRowDblClick="RowDblClick"></ClientEvents>
+        </ClientSettings>
     </telerik:RadGrid>
 
 
