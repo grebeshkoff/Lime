@@ -17,21 +17,25 @@
     <form id="main" runat="server">
         <telerik:RadFormDecorator ID="LimeFormDecorator" runat="server" DecoratedControls="all" DecorationZoneID="workspace">
             </telerik:RadFormDecorator>
+        
+        <telerik:RadFormDecorator ID="HeaderDecorator" runat="server" DecoratedControls="all" DecorationZoneID="header">
+            </telerik:RadFormDecorator>
+
+        <div id="header">
+            <div id="logo">Sample Web Site</div>
+            <div id="user-id" align="center">
+                <asp:LoginName ID="UserLoginName" runat="server" />
+                <asp:LoginStatus ID="UserLoginStatus" runat="server" OnLoggedOut="UserLoginStatus_LoggedOut" />
+            </div>
+        </div>
         <div id="workspace">
-
-            <div id="header"><div id="logo">Sample Web Site</div></div>
             <telerik:RadScriptManager ID="LimeScriptManager" runat="server"></telerik:RadScriptManager>
-           
-
         
             <div id="rfd-zone">
-
-            
                 <div id="menu">
                     <telerik:RadMenu ID="MainMenu" Runat="server" Skin="Silk" Width="100%">
                         <Items>
                             <telerik:RadMenuItem runat="server" Text="Главная" NavigateUrl="Default.aspx">
-                                
                             </telerik:RadMenuItem>
                             <telerik:RadMenuItem runat="server" Text="Клиенты" NavigateUrl="Clients.aspx">
                             </telerik:RadMenuItem>

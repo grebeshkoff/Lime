@@ -8,17 +8,11 @@ using Lime.Data.Source;
 
 namespace Lime
 {
-    public partial class _Default : System.Web.UI.Page
+    public partial class Login : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(HttpContext.Current.User.Identity.Name != ""){
-                UserLogin.Visible = false;
-            }
-            else
-            {
-                UserLogin.Visible = true;
-            }
+
         }
 
         protected void UserLogin_OnAuthenticate(object sender, AuthenticateEventArgs e)
@@ -36,6 +30,7 @@ namespace Lime
                     Session["UserAuthentication"] = username;
                     Session.Timeout = 1;
                     e.Authenticated = true;
+                    Response.Redirect("Default.aspx");
                 }
                 else
                 {

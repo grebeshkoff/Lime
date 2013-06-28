@@ -2,10 +2,12 @@
 
 
 <asp:Content runat="server" ContentPlaceHolderID="PlaceHolderMain">
-    
-    <asp:Login ID="Login1" runat="server"></asp:Login>
-    
-    <asp:LoginName ID="LoginName1" runat="server" />
-    <asp:LoginStatus ID="LoginStatus1" runat="server" />
-    <asp:LoginView ID="LoginView1" runat="server"></asp:LoginView>
+        <div style="height: 100px"></div>
+        <asp:Login
+            ID="UserLogin" 
+            runat="server" 
+            CssClass="login-form"
+            OnAuthenticate="UserLogin_OnAuthenticate">
+        </asp:Login>
+
 </asp:Content>

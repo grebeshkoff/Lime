@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Lime.Data.Source;
 
 namespace Lime
 {
@@ -11,7 +12,12 @@ namespace Lime
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Session["UserAuthentication"] = HttpContext.Current.User.ToString();
+        }
 
+        protected void UserLoginStatus_LoggedOut(object sender, EventArgs e)
+        {
+            Session["UserAuthentication"] = "";
         }
     }
 }

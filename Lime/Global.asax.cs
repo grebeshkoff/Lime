@@ -24,12 +24,12 @@ namespace Lime
 
         protected void Session_Start(object sender, EventArgs e)
         {
-
+            Session["UserAuthentication"] = "";
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
-
+            
         }
 
         protected void Application_AuthenticateRequest(object sender, EventArgs e)

@@ -10,7 +10,7 @@
 namespace Lime {
     
     
-    public partial class _Default {
+    public partial class Login {
         
         /// <summary>
         /// UserLogin элемент управления.

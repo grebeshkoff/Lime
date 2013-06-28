@@ -78,6 +78,20 @@ namespace LimeTest.Data.Source
         }
 
         [Test]
+        public void UsersTest()
+        {
+            using(var db = new LimeDataBase())
+            {
+                var query = db.Users;
+
+                foreach (var user in query)
+                {
+                    Console.WriteLine("{0}: {1}", user.Name, user.Password);
+                }
+            }
+        }
+
+        [Test]
         public void PersonInsertTest()
         {
             using (var db = new LimeDataBase())

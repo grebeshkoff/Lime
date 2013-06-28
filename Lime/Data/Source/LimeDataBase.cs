@@ -20,7 +20,7 @@ namespace Lime.Data.Source
         private const string HomeConnectionString = @"Server=MAIN-PC\MAINPCSQL;Database=LIMEBASE;Integrated Security=SSPI";
 
         public LimeDataBase()
-            : base(new SqlConnection(WorkConnectionString))
+            : base(new SqlConnection(HomeConnectionString))
         {
         }
 
@@ -39,7 +39,6 @@ namespace Lime.Data.Source
                 return GetTable<Person>();
             }
         }
-    
 
         public Table<Parameter> Parameters
         {
@@ -60,13 +59,29 @@ namespace Lime.Data.Source
             }
         }
 
+        public Table<User> Users
+        {
+            get
+            {
+                using (var db = new LimeDataBase())
+                {
+                    return GetTable<User>();
+                }
+            }
+        }
+
+
+
+#region * Gender Methods *
         public Gender GetGenderById(int id)
         {
             return (from g in Genders
                    where g.Id == id
                    select g).First();
         }
+#endregion
 
+#region * Persons Methods *
         public int AddPerson(Person person)
         {
             return SetCommand(@"
@@ -105,5 +120,6 @@ namespace Lime.Data.Source
         {
             DeletePerson(person.Id);
         }
+#endregion
     }
 }
