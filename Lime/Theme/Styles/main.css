@@ -66,3 +66,12 @@
     text-align: left;
 }
 
+#user-details td{
+    font: normal 13px Arial, Helvetica, sans-serif;
+    color: #333;
+}
+.user-params td{
+    font: normal 13px Arial, Helvetica, sans-serif;
+    color: #333;
+}
+

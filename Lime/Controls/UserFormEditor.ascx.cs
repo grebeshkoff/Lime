@@ -6,19 +6,23 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
 using Lime.Data.Source;
-using Parameter = Lime.Data.Source.Parameter;
 
 namespace Lime.Controls
 {
-    public partial class UserFormEditor : System.Web.UI.UserControl
+    public partial class UserFormEditor : UserControl
     {
         protected void Page_Load(object sender, EventArgs e)
         {
             using (var db = new LimeDataBase())
             {
+                var person = db.GetPersonById(6);
                 var parameters = (from p in db.Parameters
-                                  where p.PersonId == 4
+                                  where p.PersonId == person.Id
                                   select p);
+
+                FullNameLabel.Text = person.FullName;
+                CodeLabel.Text = person.Code;
+                GenderImage.ImageUrl = person.GenderImageUrl();
 
                 if (!parameters.Any())
                 {
@@ -35,19 +39,21 @@ namespace Lime.Controls
                     var lableCell = new TableCell();
                     var controlCell = new TableCell();
 
-                    var lable = new Label {Text = param.Name};
+                    var lable = new Label {Text = param.Name + @" :"};
                     lableCell.Controls.Add(lable);
                     row.Cells.Add(lableCell);
 
                     if (param.Type == ParameterType.Text)
                     {
                         var textControl = new RadTextBox();
+                        textControl.ID = param.Id.ToString();
                         textControl.Text = param.Value;
                         controlCell.Controls.Add(textControl);
                     }
                     else
                     {
-                        var control = new RadDropDownList();
+                        var lookupControl = new RadDropDownList();
+
                         using (var db1 = new LimeDataBase())
                         {
                             var param1 = param;
@@ -60,12 +66,12 @@ namespace Lime.Controls
                                        };
                             foreach (var lookupValue in list)
                             {
-                                control.Items.Add(new DropDownListItem(lookupValue.Value, lookupValue.Id.ToString()));
+                                lookupControl.Items.Add(new DropDownListItem(lookupValue.Value, lookupValue.Id.ToString()));
                             }
-                            control.SelectedText = param1.Value;
+                            lookupControl.SelectedText = param1.Value;
                         }
 
-                        controlCell.Controls.Add(control);
+                        controlCell.Controls.Add(lookupControl);
                     }
                     row.Cells.Add(controlCell);
 

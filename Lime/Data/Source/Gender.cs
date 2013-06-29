@@ -21,5 +21,6 @@ namespace Lime.Data.Source
         [NotNull]
         [MapField("GenderName")]
         public string Name { get; set; }
+
     }
 }

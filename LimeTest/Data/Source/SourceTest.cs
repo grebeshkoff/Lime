@@ -17,6 +17,7 @@ namespace LimeTest.Data.Source
                 foreach (var gender in query)
                 {
                     Console.WriteLine("{0} {1}", gender.Id , gender.Name);
+
                 }
             }
         }

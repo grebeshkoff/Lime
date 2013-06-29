@@ -15,9 +15,10 @@ namespace Lime.Data.Source
 {
     public class LimeDataBase: DbManager
     {
-        private const string WorkConnectionString =
-            @"Data Source=CO-PRG-05\SHAREPOINT;Initial Catalog=LIMEBASE;Integrated Security=True";
+        //Todo For debug
+        private const string WorkConnectionString = @"Data Source=CO-PRG-05\SHAREPOINT;Initial Catalog=LIMEBASE;Integrated Security=True";
         private const string HomeConnectionString = @"Server=MAIN-PC\MAINPCSQL;Database=LIMEBASE;Integrated Security=SSPI";
+
 
         public LimeDataBase()
             : base(new SqlConnection(HomeConnectionString))
@@ -82,6 +83,14 @@ namespace Lime.Data.Source
 #endregion
 
 #region * Persons Methods *
+
+        public Person GetPersonById(int id)
+        {
+            return (from p in Persons
+                    where p.Id == id
+                    select p).First();
+        }
+
         public int AddPerson(Person person)
         {
             return SetCommand(@"

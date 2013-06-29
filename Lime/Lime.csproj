@@ -76,6 +76,10 @@
     <Content Include="Scripts\jquery-1.7.1.min.js" />
     <Content Include="Test.aspx" />
     <Content Include="Theme\Images\footer.png" />
+    <Content Include="Theme\Images\gender-female.png" />
+    <Content Include="Theme\Images\gender-male.png" />
+    <Content Include="Theme\Images\gender-other.png" />
+    <Content Include="Theme\Images\gender-unknown.png" />
     <Content Include="Theme\Images\header.png" />
     <Content Include="Theme\Styles\main.css" />
     <Content Include="Web.config">
