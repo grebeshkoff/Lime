@@ -74,9 +74,26 @@ namespace Lime.Controls
                         controlCell.Controls.Add(lookupControl);
                     }
                     row.Cells.Add(controlCell);
-
                     ParameterTable.Rows.Add(row);
                 }
+
+                var controlRow = new TableRow();
+
+                var saveCell = new TableCell();
+                saveCell.Controls.Add(new RadButton
+                {
+                    Text = "Сохранить",
+                    Width = 100
+                });
+                var discardCell = new TableCell();
+                discardCell.Controls.Add(new RadButton
+                {
+                    Text = "Отмена",
+                    Width = 100,
+                });
+                controlRow.Cells.Add(saveCell);
+                controlRow.Cells.Add(discardCell);
+                ParameterTable.Rows.Add(controlRow);
             }
         }
     }

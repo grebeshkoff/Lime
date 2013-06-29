@@ -19,4 +19,16 @@
             <asp:Image ID="GenderImage" runat="server" Text=""></asp:Image>
         </asp:TableCell>
     </asp:TableRow>
+    <%--<asp:TableRow ID="TableRow1" runat="server">
+        <asp:TableCell runat="server">
+            <telerik:RadButton ID="SaveButton" runat="server" Text="Сохранить">
+                <Icon PrimaryIconCssClass="rbOk" PrimaryIconTop="4px" PrimaryIconRight="5px"></Icon>
+            </telerik:RadButton>
+        </asp:TableCell>
+        <asp:TableCell runat="server">
+            <telerik:RadButton ID="CancelButton" runat="server" Text="Отмена">
+                <Icon PrimaryIconCssClass="rbCancel" PrimaryIconTop="4px" PrimaryIconRight="5px"></Icon>
+            </telerik:RadButton>
+        </asp:TableCell>
+    </asp:TableRow>--%>
 </asp:Table>
