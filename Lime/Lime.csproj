@@ -68,8 +68,6 @@
   <ItemGroup>
     <Content Include="Clients.aspx" />
     <Content Include="Controls\ClientsGrid.ascx" />
-    <Content Include="Controls\LookupControl.ascx" />
-    <Content Include="Controls\TextControl.ascx" />
     <Content Include="Controls\UserFormEditor.ascx" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
@@ -108,20 +106,6 @@
     </Compile>
     <Compile Include="Controls\ClientsGrid.ascx.designer.cs">
       <DependentUpon>ClientsGrid.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\LookupControl.ascx.cs">
-      <DependentUpon>LookupControl.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Controls\LookupControl.ascx.designer.cs">
-      <DependentUpon>LookupControl.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\TextControl.ascx.cs">
-      <DependentUpon>TextControl.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Controls\TextControl.ascx.designer.cs">
-      <DependentUpon>TextControl.ascx</DependentUpon>
     </Compile>
     <Compile Include="Controls\UserFormEditor.ascx.cs">
       <DependentUpon>UserFormEditor.ascx</DependentUpon>

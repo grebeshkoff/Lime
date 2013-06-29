@@ -12,28 +12,21 @@ namespace Lime.Controls
 {
     public partial class UserFormEditor : System.Web.UI.UserControl
     {
-
-
-
-        public UserFormEditor()
-        {
-
-        }
-
         protected void Page_Load(object sender, EventArgs e)
         {
             using (var db = new LimeDataBase())
             {
-                //var Person = (from p in db.Persons
-                //              where p.Id == 6
-                //              select p).First();
-
                 var parameters = (from p in db.Parameters
-                                  where p.PersonId == 6
+                                  where p.PersonId == 4
                                   select p);
-            
-                var table = new Table();
 
+                if (!parameters.Any())
+                {
+                    Controls.Add(new Label()
+                        {
+                            Text = @"Для пользователя не заданы параметры"
+                        });
+                }
 
                 foreach (var param in parameters)
                 {
@@ -55,28 +48,30 @@ namespace Lime.Controls
                     else
                     {
                         var control = new RadDropDownList();
-                        var list = from vals in db.LookupValues
-                                   where vals.ParamterId == param.Id
-                                   select new LookupValue()
-                                       {
-                                           Id = vals.Id, Value = vals.Value
-                                       };
-                        foreach (var lookupValue in list)
+                        using (var db1 = new LimeDataBase())
                         {
-                            control.Items.Add(new DropDownListItem(lookupValue.Value, lookupValue.Id.ToString()));
+                            var param1 = param;
+                            var list = from vals in db1.LookupValues
+                                       where vals.ParamterId == param1.Id
+                                       select new LookupValue()
+                                       {
+                                           Id = vals.Id,
+                                           Value = vals.Value
+                                       };
+                            foreach (var lookupValue in list)
+                            {
+                                control.Items.Add(new DropDownListItem(lookupValue.Value, lookupValue.Id.ToString()));
+                            }
+                            control.SelectedText = param1.Value;
                         }
-                        
-                        control.DataSource = list;
+
                         controlCell.Controls.Add(control);
                     }
                     row.Cells.Add(controlCell);
 
-                    table.Rows.Add(row);
+                    ParameterTable.Rows.Add(row);
                 }
-
-                Controls.Add(table);
             }
-
         }
     }
 }
