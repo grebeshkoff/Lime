@@ -12,18 +12,18 @@ namespace Lime.Data.Source
     {
         [PrimaryKey, Identity]
         [MapField("ParamValueId")]
-        public int Id;
+        public int Id { get; set; }
 
         [NotNull]
         [MapField("ParamId")]
-        public int ParamterId;
+        public int ParamterId { get; set; }
 
         [NotNull]
         [MapField("ParamValueText")]
-        public string Value;
+        public string Value { get; set; }
 
-        [Association(ThisKey = "ParamterId", OtherKey = "Id", CanBeNull = false)] 
-        public Parameter Parameter;
+        [Association(ThisKey = "ParamterId", OtherKey = "Id")]
+        public Parameter Parameter { get; set; }
 
 
     }

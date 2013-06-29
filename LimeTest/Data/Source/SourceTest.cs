@@ -41,19 +41,45 @@ namespace LimeTest.Data.Source
         }
 
         [Test]
+        public void ParameterPersonTest()
+        {
+            using (var db = new LimeDataBase())
+            {
+                var q = from p in db.Parameters
+                        select new 
+                            {
+                                Id = p.Id,
+                                Name = p.Name,
+                                Value = p.Value,
+                                Type = p.Type,
+                                PersonId = p.PersonId,
+                                Person = p.Person
+                            };
+
+                foreach (var param in q)
+                {
+                    Console.WriteLine("{0} : {1} : {2}",param.Person.FullName, param.Name, param.Value);
+                }
+            }
+        }
+
+        [Test]
+        public void PersonParametersTest()
+        {
+            using (var db = new LimeDataBase())
+            {
+               
+            }
+        }
+
+        [Test]
         public void ParameterTest()
         {
             using (var db = new LimeDataBase())
             {
-                var query = from param in db.Parameters
-                            select new
-                                {
-                                    Person = param.Person
-                                };
-
-                foreach (var param in query)
+                foreach (var param in db.Parameters)
                 {
-                    Console.WriteLine("{0}", param.Person.FullName);
+                    Console.WriteLine("{0} : {1}", param.Name, param.Value);
                 }
             }
         }
@@ -63,16 +89,38 @@ namespace LimeTest.Data.Source
         {
             using (var db = new LimeDataBase())
             {
-                var query = from val in db.LookupValues
-                            select new
-                                {
-                                    Id = val.Id,
-                                    Value = val.Value,
-                                    Person = val.Parameter.Person
-                                };
-                foreach (var val in query)
+                var q = from lv in db.LookupValues
+                        join p in db.Parameters on lv.ParamterId equals p.Id
+                        join pr in db.Persons on p.PersonId equals pr.Id
+                        select new
+                            {
+                                Id = lv.Id,
+                                ParamterId = p.Id,
+                                Parameter = p,
+                                Value = lv.Value,
+                                Person = pr
+                            };
+                
+  
+
+                foreach (var val in q)
                 {
-                    Console.WriteLine("{0} {1}", val.Person.FullName, val.Value);
+                    Console.WriteLine("{0} : {1} : {2}", val.Person.FullName, val.Parameter.Name, val.Value);
+                }
+            }
+        }
+
+        [Test]
+        public void TextParameterTest()
+        {
+            using (var db = new LimeDataBase())
+            {
+                var q = (from p in db.Parameters
+                            where p.PersonId == 6
+                            select p);
+                foreach (var param in q)
+                {
+                    Console.WriteLine("{0} : {1}", param.Name, param.Value);
                 }
             }
         }

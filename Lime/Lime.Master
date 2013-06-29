@@ -43,6 +43,8 @@
                             </telerik:RadMenuItem>
                             <telerik:RadMenuItem runat="server" Text="Редактор Анкет">
                             </telerik:RadMenuItem>
+                            <telerik:RadMenuItem runat="server" Text="Test" NavigateUrl="Test.aspx">
+                            </telerik:RadMenuItem>
                         </Items>
                     </telerik:RadMenu>
                 </div>

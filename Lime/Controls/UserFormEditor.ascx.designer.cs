@@ -7,9 +7,9 @@
 // </автоматически создаваемое>
 //------------------------------------------------------------------------------
 
-namespace Lime {
+namespace Lime.Controls {
     
     
-    public partial class Clients {
+    public partial class UserFormEditor {
     }
 }

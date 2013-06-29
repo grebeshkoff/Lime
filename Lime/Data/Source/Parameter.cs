@@ -10,36 +10,46 @@ namespace Lime.Data.Source
 {
     public enum ParameterType
     {
-        [MapValue(0)] Text,
-        [MapValue(1)] Lookup
+        [MapValue(0)] Text = 0,
+        [MapValue(1)] Lookup = 1
     }
 
     [TableName("Params")]
-    public class Parameter
+    //[InheritanceMapping(Code = ParameterType.Text, Type = typeof(TextParameter))]
+    //[InheritanceMapping(Code = ParameterType.Lookup, Type=typeof(LookupParameter))]
+    public abstract class Parameter
     {
         [PrimaryKey, Identity]
-        [MapField("ParamId")] 
-        public int Id;
+        [MapField("ParamId")]
+        public int Id { get; set; }
 
         [NotNull]
         [MapField("ParamName")]
-        public string Name;
+        public string Name { get; set; }
 
         [NotNull]
-        [MapField("ParamType")] 
-        public ParameterType Type;
+        [MapField("ParamValue")]
+        public string Value { get; set; }
 
         [NotNull]
-        [MapField("ParamPersonId")] 
-        public int PersonId;
+        [MapField("ParamType")]
+        public ParameterType Type { get; set; }
 
         [NotNull]
-        [MapValue("ParamValue")]
-        public StringBuilder Value { get; set; }
+        [MapField("ParamPersonId")]
+        public int PersonId { get; set; }
 
-
-
-        [Association(ThisKey = "PersonId", OtherKey = "Id")] 
+        [Association(ThisKey = "PersonId", OtherKey = "Id")]
         public Person Person;
+
+        
+    }
+
+    public class LookupParameter : Parameter
+    {
+    }
+
+    public class TextParameter :Parameter
+    {
     }
 }

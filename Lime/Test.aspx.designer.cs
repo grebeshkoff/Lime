@@ -10,15 +10,15 @@
 namespace Lime {
     
     
-    public partial class Login {
+    public partial class Test {
         
         /// <summary>
-        /// UserLogin элемент управления.
+        /// UserFormEditor элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Login UserLogin;
+        protected global::Lime.Controls.UserFormEditor UserFormEditor;
     }
 }

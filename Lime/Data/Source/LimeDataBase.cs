@@ -115,11 +115,14 @@ namespace Lime.Data.Source
                     .ExecuteNonQuery();
         }
 
-
         public void DeletePerson(Person person)
         {
             DeletePerson(person.Id);
         }
+#endregion
+
+#region * Parameters Methods *
+
 #endregion
     }
 }

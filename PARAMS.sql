@@ -11,9 +11,9 @@ GO
 CREATE TABLE [dbo].[Params](
 	[ParamId] [int] IDENTITY(1,1) NOT NULL,
 	[ParamName] [nvarchar](255) NOT NULL,
+	[ParamValue] [nvarchar](255) NOT NULL,
 	[ParamType] [int] NOT NULL,
 	[ParamPersonId] [int] NOT NULL,
-	[ParamValue] [nvarchar](50) NOT NULL,
  CONSTRAINT [PK_Params] PRIMARY KEY CLUSTERED 
 (
 	[ParamId] ASC
