@@ -82,6 +82,7 @@
     <Content Include="Theme\Images\gender-unknown.png" />
     <Content Include="Theme\Images\header.png" />
     <Content Include="Theme\Styles\main.css" />
+    <Content Include="Theme\Styles\reset.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
