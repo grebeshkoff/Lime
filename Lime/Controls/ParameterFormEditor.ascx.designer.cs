@@ -10,16 +10,16 @@
 namespace Lime.Controls {
     
     
-    public partial class UserFormEditor {
+    public partial class ParameterFormEditor {
         
         /// <summary>
-        /// ParameterTable элемент управления.
+        /// ParameterEditorTable элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table ParameterTable;
+        protected global::System.Web.UI.WebControls.Table ParameterEditorTable;
         
         /// <summary>
         /// FullNameLabel элемент управления.
@@ -49,6 +49,15 @@ namespace Lime.Controls {
         protected global::System.Web.UI.WebControls.Image GenderImage;
         
         /// <summary>
+        /// ParametersTable элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Table ParametersTable;
+        
+        /// <summary>
         /// ControlsTable элемент управления.
         /// </summary>
         /// <remarks>
@@ -67,6 +76,15 @@ namespace Lime.Controls {
         protected global::System.Web.UI.WebControls.TableRow TableRow1;
         
         /// <summary>
+        /// TableCell1 элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TableCell TableCell1;
+        
+        /// <summary>
         /// SaveButton элемент управления.
         /// </summary>
         /// <remarks>
@@ -74,6 +92,15 @@ namespace Lime.Controls {
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
         protected global::Telerik.Web.UI.RadButton SaveButton;
+        
+        /// <summary>
+        /// TableCell2 элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TableCell TableCell2;
         
         /// <summary>
         /// CancelButton элемент управления.

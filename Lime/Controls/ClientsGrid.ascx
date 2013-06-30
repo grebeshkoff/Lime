@@ -1,15 +1,26 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ClientsGrid.ascx.cs" Inherits="Lime.Controls.ClientsGrid" %>
 
-
     <telerik:RadCodeBlock ID="RadCodeBlock1" runat="server">
         <script type="text/javascript">
             function RowDblClick(sender, eventArgs) {
                 sender.get_masterTableView().editItem(eventArgs.get_itemIndexHierarchical());
             }
+
+            function RowSelected(sender, eventArgters) {
+                var grid = $find("<%= ClientsRadGrid.ClientID %>");
+                var MasterTable = grid.get_masterTableView();
+                var selectedRows = MasterTable.get_selectedItems();
+
+                var row = selectedRows[0];
+                var cell = MasterTable.getCellByColumnUniqueName(row, "Code");
+                PageMethods.Message(cell);
+            }
+
+            
         </script>
     </telerik:RadCodeBlock>
 
-    <telerik:RadAjaxManager ID="ClientsGridAjaxManager" runat="server">
+<%--    <telerik:RadAjaxManager ID="ClientsGridAjaxManager" runat="server">
         <AjaxSettings>
             <telerik:AjaxSetting AjaxControlID="ClientsRadGrid">
                 <UpdatedControls>
@@ -18,7 +29,7 @@
                 </UpdatedControls>
             </telerik:AjaxSetting>
         </AjaxSettings>
-    </telerik:RadAjaxManager>
+    </telerik:RadAjaxManager>--%>
 
     <asp:UpdatePanel ID="NotifikationPanel" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
@@ -28,8 +39,8 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 
-    <telerik:RadAjaxLoadingPanel ID="ClientsAjaxLoadingPanel" runat="server">
-    </telerik:RadAjaxLoadingPanel>
+<%--    <telerik:RadAjaxLoadingPanel ID="ClientsAjaxLoadingPanel" runat="server">
+    </telerik:RadAjaxLoadingPanel>--%>
     
     <telerik:RadGrid
         Skin="Silk" 
@@ -81,6 +92,15 @@
                 <telerik:GridClientSelectColumn UniqueName="ClientSelectColumn">
                 </telerik:GridClientSelectColumn>
                 
+                <%--<telerik:GridTemplateColumn UniqueName="CheckBoxTemplateColumn">
+                <ItemTemplate>
+                  <asp:CheckBox ID="CheckBox1" runat="server" OnCheckedChanged="ToggleRowSelection"
+                    AutoPostBack="True" />
+                </ItemTemplate>
+                <HeaderTemplate>
+                </HeaderTemplate>
+              </telerik:GridTemplateColumn>--%>
+                
                 <telerik:GridBoundColumn 
                     UniqueName="Id" 
                     DataField="Id" 
@@ -120,6 +140,13 @@
                     ButtonType="ImageButton" 
                     CommandName="Delete">
                 </telerik:GridButtonColumn>
+                
+                 <telerik:GridButtonColumn 
+                    UniqueName="EditProperty" 
+                    ButtonType="ImageButton"
+                    ImageUrl="/Theme/Images/next.png" 
+                    CommandName="EditProperty">
+                </telerik:GridButtonColumn>
 
             </Columns>
             <EditFormSettings>
@@ -132,6 +159,7 @@
         </MasterTableView>
         <ClientSettings>
             <ClientEvents OnRowDblClick="RowDblClick"></ClientEvents>
+            <ClientEvents OnRowSelected="RowSelected"></ClientEvents>
         </ClientSettings>
     </telerik:RadGrid>
 

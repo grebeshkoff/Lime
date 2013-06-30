@@ -13,9 +13,18 @@ namespace Lime.Controls
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            
+
             using (var db = new LimeDataBase())
             {
-                var person = db.GetPersonById(6);
+                var paramDictionary = new Dictionary<int, string>();
+                if (Session["EditedPersonId"] == null)
+                {
+                    return;
+                }
+                int PersonId = Int32.Parse(Session["EditedPersonId"].ToString());
+                ViewState["PersonId"] = PersonId;
+                var person = db.GetPersonById(PersonId);
                 var parameters = (from p in db.Parameters
                                   where p.PersonId == person.Id
                                   select p);
@@ -46,9 +55,11 @@ namespace Lime.Controls
                     if (param.Type == ParameterType.Text)
                     {
                         var textControl = new RadTextBox();
-                        textControl.ID = param.Id.ToString();
+                        textControl.ID = "clientparamId" + param.Id;
                         textControl.Text = param.Value;
                         controlCell.Controls.Add(textControl);
+
+                        paramDictionary.Add(param.Id, textControl.ID);
                     }
                     else
                     {
@@ -68,33 +79,79 @@ namespace Lime.Controls
                             {
                                 lookupControl.Items.Add(new DropDownListItem(lookupValue.Value, lookupValue.Id.ToString()));
                             }
+                            lookupControl.ID = "clientparamId" + param1.Id;
                             lookupControl.SelectedText = param1.Value;
+
+                            paramDictionary.Add(param1.Id, lookupControl.ID);
                         }
 
                         controlCell.Controls.Add(lookupControl);
                     }
+                    ViewState["ParamDictionary"] = paramDictionary;
+
                     row.Cells.Add(controlCell);
                     ParameterTable.Rows.Add(row);
                 }
 
-                var controlRow = new TableRow();
+                //var controlRow = new TableRow();
 
-                var saveCell = new TableCell();
-                saveCell.Controls.Add(new RadButton
-                {
-                    Text = "Сохранить",
-                    Width = 100
-                });
-                var discardCell = new TableCell();
-                discardCell.Controls.Add(new RadButton
-                {
-                    Text = "Отмена",
-                    Width = 100,
-                });
-                controlRow.Cells.Add(saveCell);
-                controlRow.Cells.Add(discardCell);
-                ParameterTable.Rows.Add(controlRow);
+                //var saveCell = new TableCell();
+                //saveCell.Controls.Add(new RadButton
+                //{
+                //    Text = "Сохранить",
+                //    Width = 100
+                //});
+                //var discardCell = new TableCell();
+                //discardCell.Controls.Add(new RadButton
+                //{
+                //    Text = "Отмена",
+                //    Width = 100,
+                //});
+                //controlRow.Cells.Add(saveCell);
+                //controlRow.Cells.Add(discardCell);
+                //ParameterTable.Rows.Add(controlRow);
             }
+        }
+
+        protected void SaveButton_Click(object sender, EventArgs e)
+        {
+            var paramDictionary = ViewState["ParamDictionary"] as Dictionary<int, string>;
+
+            if (paramDictionary != null)
+            {
+                foreach (var param in paramDictionary)
+                {
+                    int paramId = param.Key;
+                    string paramControl = param.Value;
+
+                    string paramValue = "NaN";
+                    
+                    var control = ParameterTable.FindControl(paramControl);
+                    if (control is RadTextBox)
+                    {
+                        var tb = control as RadTextBox;
+                        paramValue = tb.Text;
+                    }
+                    else
+                    {
+                        if (control is RadDropDownList)
+                        {
+                            var tb = control as RadDropDownList;
+                            paramValue = tb.SelectedText;
+                        }
+                    }
+                    using (var db = new LimeDataBase())
+                    {
+                        db.UpdateParameterValue(paramId, paramValue);
+                    }
+                    //UpdatePanel1.Update();
+                }
+            }
+        }
+
+        protected void CancelButton_Click(object sender, EventArgs e)
+        {
+            //UpdatePanel1.Update(); 
         }
     }
 }

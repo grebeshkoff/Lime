@@ -132,6 +132,23 @@ namespace Lime.Data.Source
 
 #region * Parameters Methods *
 
+        public int UpdateParameterValue(int paramId, string paramValue)
+        {
+            var param = new Parameter
+                {
+                    Id = paramId,
+                    Value = paramValue
+                };
+            return SetCommand(@"
+                        UPDATE
+                            Params
+                        SET
+                            ParamValue = @ParamValue
+                        WHERE
+                            ParamId = @ParamId",
+            CreateParameters(param)).ExecuteNonQuery();
+        }
+
 #endregion
     }
 }

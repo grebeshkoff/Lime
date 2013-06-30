@@ -46,13 +46,18 @@
                             </telerik:RadMenuItem>
                             <telerik:RadMenuItem runat="server" Text="Test" NavigateUrl="Test.aspx">
                             </telerik:RadMenuItem>
+                            <telerik:RadMenuItem runat="server" Text="ParamTest" NavigateUrl="ParamTest.aspx">
+                            </telerik:RadMenuItem>    
+                            <telerik:RadMenuItem runat="server" Text="LookupTest" NavigateUrl="LookupTest.aspx">
+                            </telerik:RadMenuItem>                                                  
                         </Items>
                     </telerik:RadMenu>
                 </div>
                 <div>
+                    
                     <asp:ContentPlaceHolder ID="PlaceHolderMain" runat="server" >
-        
                     </asp:ContentPlaceHolder>
+
                 </div>
 
             </div>

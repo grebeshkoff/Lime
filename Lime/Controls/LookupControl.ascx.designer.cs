@@ -10,42 +10,42 @@
 namespace Lime.Controls {
     
     
-    public partial class ClientsGrid {
+    public partial class LookupControl {
         
         /// <summary>
-        /// RadCodeBlock1 элемент управления.
+        /// LockupValue элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadCodeBlock RadCodeBlock1;
+        protected global::Telerik.Web.UI.RadTextBox LockupValue;
         
         /// <summary>
-        /// NotifikationPanel элемент управления.
+        /// LookupList элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel NotifikationPanel;
+        protected global::Telerik.Web.UI.RadListBox LookupList;
         
         /// <summary>
-        /// ErrorNotification элемент управления.
+        /// AddValue элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadNotification ErrorNotification;
+        protected global::Telerik.Web.UI.RadButton AddValue;
         
         /// <summary>
-        /// ClientsRadGrid элемент управления.
+        /// RemoveValue элемент управления.
         /// </summary>
         /// <remarks>
         /// Автоматически создаваемое поле.
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadGrid ClientsRadGrid;
+        protected global::Telerik.Web.UI.RadButton RemoveValue;
     }
 }

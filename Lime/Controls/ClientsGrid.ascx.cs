@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Data;
 using System.Linq;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Lime.Data.Source;
@@ -13,6 +14,8 @@ namespace Lime.Controls
 {
     public partial class ClientsGrid : System.Web.UI.UserControl
     {
+        
+
         private void ShowNotification(string text)
         {
             ErrorNotification.Text = text;
@@ -135,6 +138,16 @@ namespace Lime.Controls
                     newValues["Gender"] = 1;
                     e.Item.OwnerTableView.InsertItem(newValues);
                 }
+                if (e.CommandName == "EditProperty")
+                {
+                    var item = (GridDataItem)e.Item;
+                    var person = e.Item.OwnerTableView.DataKeyValues[e.Item.ItemIndex]["Id"].ToString();
+                    Session["EditedPersonId"] = person;
+                    //var userData = Parent.Parent.Parent.FindControl("MainUserEditControl");
+                    //var up = userData.FindControl("UpdatePanel1") as UpdatePanel;
+                    //up.Update();
+
+                }
             }
             catch (Exception ex)
             {
@@ -178,5 +191,18 @@ namespace Lime.Controls
                 ShowNotification(ex.Message);
             }
         }
+
+        //protected void ToggleRowSelection(object sender, EventArgs e)
+        //{
+        //    ((sender as CheckBox).NamingContainer as GridItem).Selected = (sender as CheckBox).Checked;
+
+        //    foreach (GridDataItem dataItem in ClientsRadGrid.MasterTableView.Items)
+        //    {
+        //        if (!(dataItem.FindControl("CheckBox1") is CheckBox))
+        //        {
+                    
+        //        }
+        //    }
+        //}
     }
 }

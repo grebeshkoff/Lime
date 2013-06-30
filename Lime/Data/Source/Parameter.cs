@@ -17,7 +17,7 @@ namespace Lime.Data.Source
     [TableName("Params")]
     //[InheritanceMapping(Code = ParameterType.Text, Type = typeof(TextParameter))]
     //[InheritanceMapping(Code = ParameterType.Lookup, Type=typeof(LookupParameter))]
-    public abstract class Parameter
+    public class Parameter
     {
         [PrimaryKey, Identity]
         [MapField("ParamId")]
@@ -45,11 +45,4 @@ namespace Lime.Data.Source
         
     }
 
-    public class LookupParameter : Parameter
-    {
-    }
-
-    public class TextParameter :Parameter
-    {
-    }
 }

@@ -11,5 +11,32 @@ namespace Lime {
     
     
     public partial class Clients {
+        
+        /// <summary>
+        /// MainTable элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Table MainTable;
+        
+        /// <summary>
+        /// MainClientsGridControl элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::Lime.Controls.ClientsGrid MainClientsGridControl;
+        
+        /// <summary>
+        /// MainUserEditControl элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::Lime.Controls.UserFormEditor MainUserEditControl;
     }
 }

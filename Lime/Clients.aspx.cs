@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Lime.Data.Source;
@@ -16,6 +17,13 @@ namespace Lime
 
         }
 
-        
+        [WebMethod]
+        public static string Message(string val)
+        {
+            using (var db = new LimeDataBase())
+            {
+                return "Hello";
+            }
+        }
     }
 }
