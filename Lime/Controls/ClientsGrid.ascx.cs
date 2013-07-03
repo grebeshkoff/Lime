@@ -107,7 +107,10 @@ namespace Lime.Controls
                     IpAddress = HttpContext.Current.Request.UserHostAddress,
                     LodOperation = operation,
                     PersonName = person.FullName,
-                    User = HttpContext.Current.User.Identity.Name
+                    User = HttpContext.Current.User.Identity.Name,
+                    Language = HttpContext.Current.Request.UserLanguages[0] ?? "Undefined",
+                    Time = DateTime.Now
+
                 };
             db.AddLog(rec);
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -17,12 +18,12 @@ namespace Lime.Data.Source
     public class LimeDataBase: DbManager
     {
         //Todo For debug
-        private const string WorkConnectionString = @"Data Source=CO-PRG-05\SHAREPOINT;Initial Catalog=LIMEBASE;Integrated Security=True";
-        private const string HomeConnectionString = @"Server=MAIN-PC\MAINPCSQL;Database=LIMEBASE;Integrated Security=SSPI";
+        //private const string WorkConnectionString = @"Data Source=CO-PRG-05\SHAREPOINT;Initial Catalog=LIMEBASE;Integrated Security=True";
+        //private const string HomeConnectionString = @"Server=MAIN-PC\MAINPCSQL;Database=LIMEBASE;Integrated Security=SSPI";
 
 
         public LimeDataBase()
-            : base(new SqlConnection(WorkConnectionString))
+            : base(new SqlConnection(ConfigurationManager.ConnectionStrings["LimeWork"].ConnectionString))
         {
         }
 
@@ -257,9 +258,9 @@ namespace Lime.Data.Source
         {
             return SetCommand(@"
                         INSERT INTO Logs
-                            ( LogUser,  LogIPAddress,  LodOperation, LodPerson)
+                            ( LogUser,  LogIPAddress,  LogOperation, LogPerson, LogLang, LogTime)
                         VALUES
-                            ( @LogUser, @LogIPAddress, @LodOperation, @LodPerson)
+                            ( @LogUser, @LogIPAddress, @LogOperation, @LogPerson, @LogLang, @LogTime)
                         SELECT Cast(SCOPE_IDENTITY() as int)",
                         CreateParameters(record))
                     .ExecuteScalar<int>();

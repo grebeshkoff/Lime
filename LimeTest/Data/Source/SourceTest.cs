@@ -191,7 +191,10 @@ namespace LimeTest.Data.Source
                         IpAddress = "192.168.171.127",
                         LodOperation = "Add",
                         PersonName = "bacd",
-                        User = "scott"
+                        User = "scott",
+                        Language = "sdgfsf",
+                        Time = DateTime.Now
+
                     };
                 db.AddLog(rec);
             }

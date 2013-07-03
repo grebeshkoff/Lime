@@ -23,11 +23,19 @@ namespace Lime.Data.Source
         public string IpAddress { get; set; }
 
         [NotNull]
-        [MapField("LodOperation")]
+        [MapField("LogOperation")]
         public string LodOperation { get; set; }
 
         [NotNull]
-        [MapField("LodPerson")]
+        [MapField("LogPerson")]
         public string PersonName { get; set; }
+
+        [NotNull]
+        [MapField("LogLang")]
+        public string Language { get; set; }
+
+        [NotNull]
+        [MapField("LogTime")]
+        public DateTime Time { get; set; }
     }
 }
