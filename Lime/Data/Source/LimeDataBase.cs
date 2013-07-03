@@ -9,6 +9,7 @@ using BLToolkit.Data.DataProvider;
 using BLToolkit.Data.Linq;
 using BLToolkit.DataAccess;
 using BLToolkit.Mapping;
+using Telerik.Web.UI;
 
 
 namespace Lime.Data.Source
@@ -21,7 +22,7 @@ namespace Lime.Data.Source
 
 
         public LimeDataBase()
-            : base(new SqlConnection(HomeConnectionString))
+            : base(new SqlConnection(WorkConnectionString))
         {
         }
 
@@ -71,6 +72,17 @@ namespace Lime.Data.Source
             }
         }
 
+        public Table<Log> Logs
+        {
+            get
+            {
+                using (var db = new LimeDataBase())
+                {
+                    return GetTable<Log>();
+                }
+            }
+        }
+
 
 
 #region * Gender Methods *
@@ -88,6 +100,13 @@ namespace Lime.Data.Source
         {
             return (from p in Persons
                     where p.Id == id
+                    select p).First();
+        }
+
+        public Person GetPersonByCode(string code)
+        {
+            return (from p in Persons
+                    where p.Code == code
                     select p).First();
         }
 
@@ -119,9 +138,27 @@ namespace Lime.Data.Source
 
         public void DeletePerson(int id)
         {
+
+            var q = (from p in Parameters
+                               where p.PersonId == id && p.Type == ParameterType.Lookup
+                               select p);
+            var peson = GetPersonById(id);
+
             SetCommand("DELETE FROM Persons WHERE PersonId = @id",
-                        Parameter("@id", id))
+                Parameter("@id", id))
                     .ExecuteNonQuery();
+
+            
+            if (q.Any())
+            {
+                var lookupParam = q.First();
+
+                SetCommand("DELETE FROM ParamValues WHERE ParamId = @id",
+                           Parameter("@id", lookupParam.Id)).ExecuteNonQuery(); 
+            }
+
+            SetCommand("DELETE FROM Params WHERE ParamPersonId = @id",
+               Parameter("@id", id)).ExecuteNonQuery();
         }
 
         public void DeletePerson(Person person)
@@ -131,6 +168,42 @@ namespace Lime.Data.Source
 #endregion
 
 #region * Parameters Methods *
+
+        public List<Parameter> GetParameterListByPerson(Person person)
+        {
+            return (from param in Parameters
+                   where param.PersonId == person.Id
+                   select param).ToList();
+        }
+
+        public int AddNewParameter(Parameter parameter)
+        {
+            return SetCommand(@"
+                        INSERT INTO Params
+                            ( ParamName,  ParamType,  ParamPersonId, ParamValue)
+                        VALUES
+                            (  @ParamName,  @ParamType,  @ParamPersonId, @ParamValue)
+                        SELECT Cast(SCOPE_IDENTITY() as int)",
+                        CreateParameters(parameter))
+                    .ExecuteScalar<int>();
+        }
+
+
+        public void UpdatesExistParameter(Parameter parameter)
+        {
+            SetCommand(@"
+                        UPDATE
+                            Params
+                        SET
+                            ParamName = @ParamName,
+                            ParamType = @ParamType,
+                            ParamPersonId = @ParamPersonId,
+                            ParamValue = @ParamValue
+                        WHERE
+                            ParamId = @ParamId",
+            CreateParameters(parameter)).ExecuteNonQuery();
+        }
+
 
         public int UpdateParameterValue(int paramId, string paramValue)
         {
@@ -150,5 +223,48 @@ namespace Lime.Data.Source
         }
 
 #endregion
+
+#region * LookupValue Methods *
+
+        public void DeleteLookupValue(int id)
+        {
+            SetCommand("DELETE FROM ParamValues WHERE ParamValueId = @id",
+                        Parameter("@id", id))
+                    .ExecuteNonQuery();
+        }
+
+        public int AddLookupValue(int paramId, string lockupValue)
+        {
+            var lookup = new LookupValue()
+                {
+                    ParamterId = paramId,
+                    Value = lockupValue
+                };
+            return SetCommand(@"
+                        INSERT INTO ParamValues
+                            ( ParamId,  ParamValueText)
+                        VALUES
+                            ( @ParamId,  @ParamValueText)
+                        SELECT Cast(SCOPE_IDENTITY() as int)",
+                    CreateParameters(lookup)).ExecuteScalar<int>();
+        }
+
+#endregion
+
+#region * Log Methods *
+
+        public int AddLog(Log record)
+        {
+            return SetCommand(@"
+                        INSERT INTO Logs
+                            ( LogUser,  LogIPAddress,  LodOperation, LodPerson)
+                        VALUES
+                            ( @LogUser, @LogIPAddress, @LodOperation, @LodPerson)
+                        SELECT Cast(SCOPE_IDENTITY() as int)",
+                        CreateParameters(record))
+                    .ExecuteScalar<int>();
+        }
+
+        #endregion
     }
 }

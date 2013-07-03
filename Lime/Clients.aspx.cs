@@ -17,13 +17,6 @@ namespace Lime
 
         }
 
-        [WebMethod]
-        public static string Message(string val)
-        {
-            using (var db = new LimeDataBase())
-            {
-                return "Hello";
-            }
-        }
+       
     }
 }

@@ -3,7 +3,7 @@
 
 
 <%--Legend--%>
-<asp:Table runat="server" ID="ParameterTable" CssClass="user-params">
+<asp:Table runat="server" ID="LegendTable" CssClass="user-params">
     <asp:TableRow runat="server">
         <asp:TableCell runat="server">Полное имя клиента :</asp:TableCell>
         <asp:TableCell runat="server">
@@ -24,7 +24,7 @@
     </asp:TableRow>
 </asp:Table>
 
-
+<asp:Table runat="server" ID="ParameterTable" CssClass="user-params" />
 
 <asp:Table runat="server" ID="ControlsTable">
     <asp:TableRow ID="TableRow1" runat="server">

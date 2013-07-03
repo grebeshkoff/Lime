@@ -3,5 +3,5 @@
 <%@ Register src="Controls/ParameterFormEditor.ascx" tagName="ParameterFormEditor" tagPrefix="param" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="PlaceHolderMain" runat="server">
-    <param:ParameterFormEditor runat="server"/>
+    <param:ParameterFormEditor runat="server" PersonId="-1"/>
 </asp:Content>

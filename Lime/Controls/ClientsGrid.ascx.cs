@@ -81,15 +81,35 @@ namespace Lime.Controls
             {
                 using (var db = new LimeDataBase())
                 {
-                    var item = (GridDataItem)e.Item;
-                    var person = e.Item.OwnerTableView.DataKeyValues[e.Item.ItemIndex]["Id"].ToString();
-                    db.DeletePerson(Int32.Parse(person));
+                    //var item = (GridDataItem)e.Item;
+                    var personId = e.Item.OwnerTableView.DataKeyValues[e.Item.ItemIndex]["Id"].ToString();
+                    int id = Int32.Parse(personId);
+                    var person = db.GetPersonById(id);
+
+                    db.BeginTransaction();
+
+                    LogOperation(person, db, "Delete");
+                    db.DeletePerson(id);
+                    db.CommitTransaction();
+
                 }
             }
             catch (Exception ex)
             {
                 ShowNotification(ex.Message);
             }
+        }
+
+        private static void LogOperation(Person person, LimeDataBase db, string operation)
+        {
+            var rec = new Log
+                {
+                    IpAddress = HttpContext.Current.Request.UserHostAddress,
+                    LodOperation = operation,
+                    PersonName = person.FullName,
+                    User = HttpContext.Current.User.Identity.Name
+                };
+            db.AddLog(rec);
         }
 
         protected void ClientsRadGrid_InsertCommand(object sender, GridCommandEventArgs e)
@@ -115,7 +135,10 @@ namespace Lime.Controls
 
                 using (var db = new LimeDataBase())
                 {
+                    db.BeginTransaction();
+                    LogOperation(person, db, "Insert");
                     db.AddPerson(person);
+                    db.CommitTransaction();
                 }
 
             }
@@ -129,7 +152,7 @@ namespace Lime.Controls
         {
             try
             {
-                if (e.CommandName == RadGrid.InitInsertCommandName)
+                if (e.CommandName == RadGrid.InitInsertCommandName && (e.CommandName != "EditProperty"))
                 {
                     e.Canceled = true;
                     var newValues = new ListDictionary();
@@ -142,10 +165,20 @@ namespace Lime.Controls
                 {
                     var item = (GridDataItem)e.Item;
                     var person = e.Item.OwnerTableView.DataKeyValues[e.Item.ItemIndex]["Id"].ToString();
-                    Session["EditedPersonId"] = person;
-                    //var userData = Parent.Parent.Parent.FindControl("MainUserEditControl");
-                    //var up = userData.FindControl("UpdatePanel1") as UpdatePanel;
-                    //up.Update();
+
+                    
+                    var userControl = Parent.FindControl("MainUserEditControl") as UserFormEditor;
+                    if (userControl == null)
+                    {
+                        var userControl1 = Parent.FindControl("MainParamEditControl") as ParameterFormEditor;
+                        userControl1.ForceBinding(Int32.Parse(person));
+                    }
+                    else
+                    {
+                        userControl.ForeceRebind(Int32.Parse(person));
+                    }
+
+
 
                 }
             }
@@ -154,6 +187,8 @@ namespace Lime.Controls
                 ShowNotification(ex.Message);
             }
         }
+
+
 
         protected void ClientsRadGrid_OnUpdateCommand(object sender, GridCommandEventArgs e)
         {
@@ -182,7 +217,10 @@ namespace Lime.Controls
 
                 using (var db = new LimeDataBase())
                 {
+                    db.BeginTransaction();
+                    LogOperation(person, db, "Update");
                     db.UpdatePerson(person);
+                    db.CommitTransaction();
                 }
 
             }

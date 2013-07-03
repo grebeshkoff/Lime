@@ -181,6 +181,23 @@ namespace LimeTest.Data.Source
             PersonTest();
         }
 
+        [Test]
+        public void LogInsertTest()
+        {
+            using (var db=new LimeDataBase())
+            {
+                var rec = new Log
+                    {
+                        IpAddress = "192.168.171.127",
+                        LodOperation = "Add",
+                        PersonName = "bacd",
+                        User = "scott"
+                    };
+                db.AddLog(rec);
+            }
+
+        }
+
     }
 }
 

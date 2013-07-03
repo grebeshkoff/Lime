@@ -24,13 +24,13 @@
 
         <div id="header">
             <div id="logo">Sample Web Site</div>
-            <div id="user-id" align="center">
+            <div id="user-id" >
                 <asp:LoginName ID="UserLoginName" runat="server" />
                 <asp:LoginStatus ID="UserLoginStatus" runat="server" OnLoggedOut="UserLoginStatus_LoggedOut" />
             </div>
         </div>
         <div id="workspace">
-            <telerik:RadScriptManager ID="LimeScriptManager" runat="server"></telerik:RadScriptManager>
+            <telerik:RadScriptManager ID="LimeScriptManager" runat="server" EnablePageMethods="True"></telerik:RadScriptManager>
         
             <div id="rfd-zone">
                 <div id="menu">
@@ -38,18 +38,10 @@
                         <Items>
                             <telerik:RadMenuItem runat="server" Text="Главная" NavigateUrl="Default.aspx">
                             </telerik:RadMenuItem>
-                            <telerik:RadMenuItem runat="server" Text="Клиенты" NavigateUrl="Clients.aspx">
+                            <telerik:RadMenuItem runat="server" Text="Данные клиентов" NavigateUrl="Clients.aspx">
                             </telerik:RadMenuItem>
-                            <telerik:RadMenuItem runat="server" Text="Анкеты">
+                            <telerik:RadMenuItem runat="server" Text="Анкеты Клиентов" NavigateUrl="Config.aspx">
                             </telerik:RadMenuItem>
-                            <telerik:RadMenuItem runat="server" Text="Редактор Анкет">
-                            </telerik:RadMenuItem>
-                            <telerik:RadMenuItem runat="server" Text="Test" NavigateUrl="Test.aspx">
-                            </telerik:RadMenuItem>
-                            <telerik:RadMenuItem runat="server" Text="ParamTest" NavigateUrl="ParamTest.aspx">
-                            </telerik:RadMenuItem>    
-                            <telerik:RadMenuItem runat="server" Text="LookupTest" NavigateUrl="LookupTest.aspx">
-                            </telerik:RadMenuItem>                                                  
                         </Items>
                     </telerik:RadMenu>
                 </div>

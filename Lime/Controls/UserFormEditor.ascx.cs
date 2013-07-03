@@ -11,20 +11,36 @@ namespace Lime.Controls
 {
     public partial class UserFormEditor : UserControl
     {
+       
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            ForeceRebind();
+        }
 
+        public void ForeceRebind()
+        {
+                ForeceRebind(ViewState["PersonId"]!=null? Int32.Parse(ViewState["PersonId"].ToString()):0);
+        }
+
+        public void ForeceRebind(int userId)
+        {
             using (var db = new LimeDataBase())
             {
                 var paramDictionary = new Dictionary<int, string>();
-                if (Session["EditedPersonId"] == null)
+                if (userId == 0)
                 {
+                    ControlsTable.Visible = false;
                     return;
                 }
-                int PersonId = Int32.Parse(Session["EditedPersonId"].ToString());
-                ViewState["PersonId"] = PersonId;
-                var person = db.GetPersonById(PersonId);
+                else
+                {
+                    ControlsTable.Visible = true;
+                }
+
+
+                ViewState["PersonId"] = userId;
+                var person = db.GetPersonById(userId);
                 var parameters = (from p in db.Parameters
                                   where p.PersonId == person.Id
                                   select p);
@@ -35,15 +51,18 @@ namespace Lime.Controls
 
                 if (!parameters.Any())
                 {
-                    Controls.Add(new Label()
-                        {
-                            Text = @"Для пользователя не заданы параметры"
-                        });
+                    ControlsTable.Visible = false;
                 }
+                else
+                {
+                    ControlsTable.Visible = true;
+                }
+
+                ParameterTable.Rows.Clear();
 
                 foreach (var param in parameters)
                 {
-                    var row  = new TableRow();
+                    var row = new TableRow();
 
                     var lableCell = new TableCell();
                     var controlCell = new TableCell();
@@ -71,16 +90,18 @@ namespace Lime.Controls
                             var list = from vals in db1.LookupValues
                                        where vals.ParamterId == param1.Id
                                        select new LookupValue()
-                                       {
-                                           Id = vals.Id,
-                                           Value = vals.Value
-                                       };
+                                           {
+                                               Id = vals.Id,
+                                               Value = vals.Value
+                                           };
                             foreach (var lookupValue in list)
                             {
-                                lookupControl.Items.Add(new DropDownListItem(lookupValue.Value, lookupValue.Id.ToString()));
+                                lookupControl.Items.Add(new DropDownListItem(lookupValue.Value,
+                                                                             lookupValue.Id.ToString()));
                             }
                             lookupControl.ID = "clientparamId" + param1.Id;
-                            lookupControl.SelectedText = param1.Value;
+                            if (param1.Value != "NaN")
+                                lookupControl.SelectedText = param1.Value;
 
                             paramDictionary.Add(param1.Id, lookupControl.ID);
                         }
@@ -92,24 +113,6 @@ namespace Lime.Controls
                     row.Cells.Add(controlCell);
                     ParameterTable.Rows.Add(row);
                 }
-
-                //var controlRow = new TableRow();
-
-                //var saveCell = new TableCell();
-                //saveCell.Controls.Add(new RadButton
-                //{
-                //    Text = "Сохранить",
-                //    Width = 100
-                //});
-                //var discardCell = new TableCell();
-                //discardCell.Controls.Add(new RadButton
-                //{
-                //    Text = "Отмена",
-                //    Width = 100,
-                //});
-                //controlRow.Cells.Add(saveCell);
-                //controlRow.Cells.Add(discardCell);
-                //ParameterTable.Rows.Add(controlRow);
             }
         }
 
@@ -144,14 +147,14 @@ namespace Lime.Controls
                     {
                         db.UpdateParameterValue(paramId, paramValue);
                     }
-                    //UpdatePanel1.Update();
+                    
                 }
             }
         }
 
         protected void CancelButton_Click(object sender, EventArgs e)
         {
-            //UpdatePanel1.Update(); 
+            ForeceRebind();
         }
     }
 }

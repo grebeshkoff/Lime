@@ -5,19 +5,9 @@
             function RowDblClick(sender, eventArgs) {
                 sender.get_masterTableView().editItem(eventArgs.get_itemIndexHierarchical());
             }
-
-            function RowSelected(sender, eventArgters) {
-                var grid = $find("<%= ClientsRadGrid.ClientID %>");
-                var MasterTable = grid.get_masterTableView();
-                var selectedRows = MasterTable.get_selectedItems();
-
-                var row = selectedRows[0];
-                var cell = MasterTable.getCellByColumnUniqueName(row, "Code");
-                PageMethods.Message(cell);
-            }
-
             
-        </script>
+
+           </script>
     </telerik:RadCodeBlock>
 
 <%--    <telerik:RadAjaxManager ID="ClientsGridAjaxManager" runat="server">
@@ -127,7 +117,8 @@
                     ListTextField="Name"
                     ListValueField="Id"
                     DropDownControlType="DropDownList"
-                    DataField="Gender">
+                    DataField="Gender"
+                    Visible="False">
                 </telerik:GridDropDownColumn>
                 
                 <telerik:GridEditCommandColumn 
@@ -159,7 +150,7 @@
         </MasterTableView>
         <ClientSettings>
             <ClientEvents OnRowDblClick="RowDblClick"></ClientEvents>
-            <ClientEvents OnRowSelected="RowSelected"></ClientEvents>
+           
         </ClientSettings>
     </telerik:RadGrid>
 
