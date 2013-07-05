@@ -19,7 +19,14 @@ namespace Lime.Data.Source
     public partial class LimeDataBase : DbManager
     {
 
-
+#region * Gender Methods *
+        public Gender GetGenderById(int id)
+        {
+            return (from g in Genders
+                    where g.Id == id
+                    select g).First();
+        }
+#endregion
 
 
 #region * Parameters Methods *
@@ -31,7 +38,7 @@ namespace Lime.Data.Source
                     select param).ToList();
         }
 
-        public int AddParameter(Parameter parameter)
+        public int  AddParameter(Parameter parameter)
         {
             return SetCommand(@"
                         INSERT INTO Params
@@ -58,7 +65,7 @@ namespace Lime.Data.Source
             CreateParameters(parameter)).ExecuteNonQuery();
         }
 
-        public int UpdateParameterValue(int paramId, string paramValue)
+        public int  UpdateParameterValue(int paramId, string paramValue)
         {
             var param = new Parameter
             {
@@ -84,7 +91,13 @@ namespace Lime.Data.Source
                         .ExecuteNonQuery();
             CommitTransaction();
         }
-#endregion
+
+        public void DeleteParameter(Parameter param)
+        {
+            DeleteParameter(param.Id);
+        }
+
+        #endregion
 
 #region * LookupValue Methods *
         public int  AddLookupValue(LookupValue value)
