@@ -18,12 +18,17 @@ namespace Lime.Data.Source
     public class LimeDataBase: DbManager
     {
         //Todo For debug
-        //private const string WorkConnectionString = @"Data Source=CO-PRG-05\SHAREPOINT;Initial Catalog=LIMEBASE;Integrated Security=True";
+        private const string WorkConnectionString = @"Data Source=CO-PRG-05\SHAREPOINT;Initial Catalog=LIMEBASE;Integrated Security=True";
         //private const string HomeConnectionString = @"Server=MAIN-PC\MAINPCSQL;Database=LIMEBASE;Integrated Security=SSPI";
 
 
+        //public LimeDataBase()
+        //    : base(new SqlConnection(ConfigurationManager.ConnectionStrings["LimeWork"].ConnectionString))
+        //{
+        //}
+
         public LimeDataBase()
-            : base(new SqlConnection(ConfigurationManager.ConnectionStrings["LimeWork"].ConnectionString))
+            : base(new SqlConnection(WorkConnectionString))
         {
         }
 
