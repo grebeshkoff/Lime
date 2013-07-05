@@ -71,6 +71,7 @@
     <Content Include="Config.aspx" />
     <Content Include="Controls\ClientsGrid.ascx" />
     <Content Include="Controls\ParameterFormEditor.ascx" />
+    <Content Include="Controls\ParameterListEditor.ascx" />
     <Content Include="Controls\UserFormEditor.ascx" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
@@ -78,6 +79,7 @@
     <Content Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
+    <Content Include="Test.aspx" />
     <Content Include="Theme\Images\footer.png" />
     <Content Include="Theme\Images\gender-female.png" />
     <Content Include="Theme\Images\gender-male.png" />
@@ -85,6 +87,8 @@
     <Content Include="Theme\Images\gender-unknown.png" />
     <Content Include="Theme\Images\header.png" />
     <Content Include="Theme\Images\next.png" />
+    <Content Include="Theme\Images\uiLookup.png" />
+    <Content Include="Theme\Images\uiText.png" />
     <Content Include="Theme\Styles\main.css" />
     <Content Include="Theme\Styles\reset.css" />
     <Content Include="Web.config">
@@ -130,6 +134,13 @@
     <Compile Include="Controls\ParameterFormEditor.ascx.designer.cs">
       <DependentUpon>ParameterFormEditor.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ParameterListEditor.ascx.cs">
+      <DependentUpon>ParameterListEditor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\ParameterListEditor.ascx.designer.cs">
+      <DependentUpon>ParameterListEditor.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Controls\UserFormEditor.ascx.cs">
       <DependentUpon>UserFormEditor.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -169,6 +180,13 @@
       <DependentUpon>ParamTest.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Test.aspx.cs">
+      <DependentUpon>Test.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Test.aspx.designer.cs">
+      <DependentUpon>Test.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -222,7 +240,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
