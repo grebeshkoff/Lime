@@ -23,7 +23,7 @@ namespace Lime.Controls
             using (var db = new LimeDataBase())
             {
                 var person = db.GetPersonById(PersonId);
-                ParametersGrid.DataSource = db.GetParameterListByPerson(person);
+                ParametersGrid.DataSource = db.GetParametersByPerson(person);
             }
         }
 

@@ -149,7 +149,8 @@
       <DependentUpon>UserFormEditor.ascx</DependentUpon>
     </Compile>
     <Compile Include="Data\Source\Gender.cs" />
-    <Compile Include="Data\Source\LimeDataBase.cs" />
+    <Compile Include="Data\Source\LimeDataBase.Tables.cs" />
+    <Compile Include="Data\Source\LimeDatabase.Operations.cs" />
     <Compile Include="Data\Source\Log.cs" />
     <Compile Include="Data\Source\LookupValue.cs" />
     <Compile Include="Data\Source\Parameter.cs" />

@@ -70,7 +70,7 @@ namespace Lime.Controls
                 FullNameLabel.Text = person.FullName;
                 CodeLabel.Text = person.Code;
                 GenderImage.ImageUrl = person.GenderImageUrl();
-                var parameters = db.GetParameterListByPerson(person);
+                var parameters = db.GetParametersByPerson(person);
                 if (parameters.Count == 0)
                 {
                     ViewState["LookupParamId"] = -1;
@@ -129,8 +129,9 @@ namespace Lime.Controls
                             return;
                         }
                     }
-                    
-                    int newId=db.AddLookupValue(paramId, LockupValueText.Text);
+
+                    var value = new LookupValue {ParamterId = paramId, Value = LockupValueText.Text};
+                    int newId=db.AddLookupValue(value);
                     LookupList.Items.Add(new RadListBoxItem(LockupValueText.Text, newId.ToString())); 
                 }
                 LockupValueText.Text = "";
@@ -183,7 +184,7 @@ namespace Lime.Controls
                                 Type = ParameterType.Text,
                                 Value = "NaN"
                             };
-                        ViewState["TextParamId"] = db.AddNewParameter(param);
+                        ViewState["TextParamId"] = db.AddParameter(param);
                         TextParameterName.BackColor = SavedColor;
                     }
                     else
@@ -202,7 +203,7 @@ namespace Lime.Controls
                                 Type = ParameterType.Text,
                                 Value = "NaN"
                             };
-                            db.UpdatesExistParameter(param);
+                            db.UpdateParameter(param);
                             TextParameterName.BackColor = SavedColor;
                         }
                     }
@@ -216,7 +217,6 @@ namespace Lime.Controls
                 {
                     if (ViewState["LookupParamId"].ToString() == "-1")
                     {
-
                         var param = new Parameter
                             {
                                 Name = LookupParameterName.Text,
@@ -224,7 +224,7 @@ namespace Lime.Controls
                                 Type = ParameterType.Lookup,
                                 Value = "NaN"
                             };
-                        ViewState["LookupParamId"] = db.AddNewParameter(param);
+                        ViewState["LookupParamId"] = db.AddParameter(param);
                         LookupParameterName.BackColor = SavedColor;
                     }
                     else
@@ -243,7 +243,7 @@ namespace Lime.Controls
                                 Type = ParameterType.Lookup,
                                 Value = "NaN"
                             };
-                            db.UpdatesExistParameter(param);
+                            db.UpdateParameter(param);
                             LookupParameterName.BackColor = SavedColor;
                         }
                     }

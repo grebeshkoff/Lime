@@ -15,7 +15,7 @@ using Telerik.Web.UI;
 
 namespace Lime.Data.Source
 {
-    public class LimeDataBase: DbManager
+    public partial class LimeDataBase: DbManager
     {
         //Todo For debug
         private const string WorkConnectionString = @"Data Source=CO-PRG-05\SHAREPOINT;Initial Catalog=LIMEBASE;Integrated Security=True";
@@ -159,114 +159,10 @@ namespace Lime.Data.Source
         }
 #endregion
 
-#region * Parameters Methods *
-
-        public List<Parameter> GetParameterListByPerson(Person person)
-        {
-            return (from param in Parameters
-                   where param.PersonId == person.Id
-                   select param).ToList();
-        }
-
-        public int AddNewParameter(Parameter parameter)
-        {
-            return SetCommand(@"
-                        INSERT INTO Params
-                            ( ParamName,  ParamType,  ParamPersonId, ParamValue)
-                        VALUES
-                            (  @ParamName,  @ParamType,  @ParamPersonId, @ParamValue)
-                        SELECT Cast(SCOPE_IDENTITY() as int)",
-                        CreateParameters(parameter))
-                    .ExecuteScalar<int>();
-        }
-
-        public void UpdatesExistParameter(Parameter parameter)
-        {
-            SetCommand(@"
-                        UPDATE
-                            Params
-                        SET
-                            ParamName = @ParamName,
-                            ParamType = @ParamType,
-                            ParamPersonId = @ParamPersonId,
-                            ParamValue = @ParamValue
-                        WHERE
-                            ParamId = @ParamId",
-            CreateParameters(parameter)).ExecuteNonQuery();
-        }
-
-        public int UpdateParameterValue(int paramId, string paramValue)
-        {
-            var param = new Parameter
-                {
-                    Id = paramId,
-                    Value = paramValue
-                };
-            return SetCommand(@"
-                        UPDATE
-                            Params
-                        SET
-                            ParamValue = @ParamValue
-                        WHERE
-                            ParamId = @ParamId",
-            CreateParameters(param)).ExecuteNonQuery();
-        }
-
-        public void DeleteParameter(int id)
-        {
-            
-        }
-#endregion
-
-#region * LookupValue Methods *
-
-        public int AddLookupValue(int paramId, string lockupValue)
-        {
-            var lookup = new LookupValue()
-            {
-                ParamterId = paramId,
-                Value = lockupValue
-            };
-            return SetCommand(@"
-                        INSERT INTO ParamValues
-                            ( ParamId,  ParamValueText)
-                        VALUES
-                            ( @ParamId,  @ParamValueText)
-                        SELECT Cast(SCOPE_IDENTITY() as int)",
-                    CreateParameters(lookup)).ExecuteScalar<int>();
-        }
-
-        public void DeleteLookupValue(int id)
-        {
-            SetCommand("DELETE FROM ParamValues WHERE ParamValueId = @id",
-                        Parameter("@id", id))
-                    .ExecuteNonQuery();
-        }
-
-        public void DeleteLookupValuesSet(int paramId)
-        {
-            SetCommand("DELETE FROM ParamValues WHERE ParamId = @ParamId",
-                        Parameter("@ParamId", paramId))
-                    .ExecuteNonQuery();
-        }
 
 
-#endregion
 
-#region * Log Methods *
 
-        public int AddLog(Log record)
-        {
-            return SetCommand(@"
-                        INSERT INTO Logs
-                            ( LogUser,  LogIPAddress,  LogOperation, LogPerson, LogLang, LogTime)
-                        VALUES
-                            ( @LogUser, @LogIPAddress, @LogOperation, @LogPerson, @LogLang, @LogTime)
-                        SELECT Cast(SCOPE_IDENTITY() as int)",
-                        CreateParameters(record))
-                    .ExecuteScalar<int>();
-        }
 
-#endregion
     }
 }

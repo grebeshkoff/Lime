@@ -9,6 +9,16 @@ namespace LimeTest.Data.Source
     [TestFixture]
     class SourceCrudTest
     {
+        [Test]
+        public void DeleteParameterTest ()
+        {
 
+        }
+
+        [Test]
+        public void AddParameterTest()
+        {
+
+        }
     }
 }
