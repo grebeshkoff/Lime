@@ -16,7 +16,7 @@ namespace LimeTest.Data.Source
                 var query = db.Genders;
                 foreach (var gender in query)
                 {
-                    Console.WriteLine("{0} {1}", gender.Id , gender.Name);
+                    Console.WriteLine("{0} {1}", gender.Id, gender.Name);
 
                 }
             }
@@ -47,7 +47,7 @@ namespace LimeTest.Data.Source
             using (var db = new LimeDataBase())
             {
                 var q = from p in db.Parameters
-                        select new 
+                        select new
                             {
                                 Id = p.Id,
                                 Name = p.Name,
@@ -59,7 +59,7 @@ namespace LimeTest.Data.Source
 
                 foreach (var param in q)
                 {
-                    Console.WriteLine("{0} : {1} : {2}",param.Person.FullName, param.Name, param.Value);
+                    Console.WriteLine("{0} : {1} : {2}", param.Person.FullName, param.Name, param.Value);
                 }
             }
         }
@@ -69,7 +69,7 @@ namespace LimeTest.Data.Source
         {
             using (var db = new LimeDataBase())
             {
-               
+
             }
         }
 
@@ -101,8 +101,8 @@ namespace LimeTest.Data.Source
                                 Value = lv.Value,
                                 Person = pr
                             };
-                
-  
+
+
 
                 foreach (var val in q)
                 {
@@ -117,8 +117,8 @@ namespace LimeTest.Data.Source
             using (var db = new LimeDataBase())
             {
                 var q = (from p in db.Parameters
-                            where p.PersonId == 6
-                            select p);
+                         where p.PersonId == 6
+                         select p);
                 foreach (var param in q)
                 {
                     Console.WriteLine("{0} : {1}", param.Name, param.Value);
@@ -129,7 +129,7 @@ namespace LimeTest.Data.Source
         [Test]
         public void UsersTest()
         {
-            using(var db = new LimeDataBase())
+            using (var db = new LimeDataBase())
             {
                 var query = db.Users;
 
@@ -154,6 +154,25 @@ namespace LimeTest.Data.Source
 
                 Console.WriteLine(@"Last Identity : {0}", db.AddPerson(p));
                 PersonTest();
+            }
+        }
+
+
+        [Test]
+        public void PersonInsertStressTest()
+        {
+            using (var db = new LimeDataBase())
+            {
+                for (int i = 0; i < 300000; i++)
+                {
+                    var p = new Person()
+                    {
+                        FullName = "Client" + i,
+                        Code = "123456789123",
+                        GenderId = i % 4 + 1,
+                    };
+                    db.AddPerson(p);
+                }
             }
         }
 
@@ -184,7 +203,7 @@ namespace LimeTest.Data.Source
         [Test]
         public void LogInsertTest()
         {
-            using (var db=new LimeDataBase())
+            using (var db = new LimeDataBase())
             {
                 var rec = new Log
                     {

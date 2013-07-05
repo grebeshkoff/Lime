@@ -22,11 +22,7 @@ namespace Lime.Data.Source
         //private const string HomeConnectionString = @"Server=MAIN-PC\MAINPCSQL;Database=LIMEBASE;Integrated Security=SSPI";
 
 
-        //public LimeDataBase()
-        //    : base(new SqlConnection(ConfigurationManager.ConnectionStrings["LimeWork"].ConnectionString))
-        //{
-        //}
-
+#region * Tables *
         public LimeDataBase()
             : base(new SqlConnection(WorkConnectionString))
         {
@@ -60,10 +56,7 @@ namespace Lime.Data.Source
         {
             get
             {
-                using (var db = new LimeDataBase())
-                {
-                    return GetTable<LookupValue>();
-                }
+                return GetTable<LookupValue>();
             }
         }
 
@@ -71,10 +64,7 @@ namespace Lime.Data.Source
         {
             get
             {
-                using (var db = new LimeDataBase())
-                {
-                    return GetTable<User>();
-                }
+                return GetTable<User>();
             }
         }
 
@@ -82,14 +72,10 @@ namespace Lime.Data.Source
         {
             get
             {
-                using (var db = new LimeDataBase())
-                {
-                    return GetTable<Log>();
-                }
+                return GetTable<Log>();
             }
         }
-
-
+#endregion
 
 #region * Gender Methods *
         public Gender GetGenderById(int id)
@@ -194,7 +180,6 @@ namespace Lime.Data.Source
                     .ExecuteScalar<int>();
         }
 
-
         public void UpdatesExistParameter(Parameter parameter)
         {
             SetCommand(@"
@@ -209,7 +194,6 @@ namespace Lime.Data.Source
                             ParamId = @ParamId",
             CreateParameters(parameter)).ExecuteNonQuery();
         }
-
 
         public int UpdateParameterValue(int paramId, string paramValue)
         {
@@ -228,24 +212,21 @@ namespace Lime.Data.Source
             CreateParameters(param)).ExecuteNonQuery();
         }
 
+        public void DeleteParameter(int id)
+        {
+            
+        }
 #endregion
 
 #region * LookupValue Methods *
 
-        public void DeleteLookupValue(int id)
-        {
-            SetCommand("DELETE FROM ParamValues WHERE ParamValueId = @id",
-                        Parameter("@id", id))
-                    .ExecuteNonQuery();
-        }
-
         public int AddLookupValue(int paramId, string lockupValue)
         {
             var lookup = new LookupValue()
-                {
-                    ParamterId = paramId,
-                    Value = lockupValue
-                };
+            {
+                ParamterId = paramId,
+                Value = lockupValue
+            };
             return SetCommand(@"
                         INSERT INTO ParamValues
                             ( ParamId,  ParamValueText)
@@ -254,6 +235,21 @@ namespace Lime.Data.Source
                         SELECT Cast(SCOPE_IDENTITY() as int)",
                     CreateParameters(lookup)).ExecuteScalar<int>();
         }
+
+        public void DeleteLookupValue(int id)
+        {
+            SetCommand("DELETE FROM ParamValues WHERE ParamValueId = @id",
+                        Parameter("@id", id))
+                    .ExecuteNonQuery();
+        }
+
+        public void DeleteLookupValuesSet(int paramId)
+        {
+            SetCommand("DELETE FROM ParamValues WHERE ParamId = @ParamId",
+                        Parameter("@ParamId", paramId))
+                    .ExecuteNonQuery();
+        }
+
 
 #endregion
 
@@ -271,6 +267,6 @@ namespace Lime.Data.Source
                     .ExecuteScalar<int>();
         }
 
-        #endregion
+#endregion
     }
 }

@@ -18,12 +18,7 @@ namespace Lime.Controls
 
         }
 
-        protected void NeedDataSourceParametersListView(object sender, RadListViewNeedDataSourceEventArgs e)
-        {
-            
-        }
-
-        protected void ClientsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        protected void ParametersGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             using (var db = new LimeDataBase())
             {
@@ -33,6 +28,10 @@ namespace Lime.Controls
         }
 
         protected void ParametersGrid_ItemDataBound(object sender, GridItemEventArgs e)
+        {
+        }
+
+        protected void ParametersGrid_DeleteCommand(object sender, GridCommandEventArgs e)
         {
             
         }

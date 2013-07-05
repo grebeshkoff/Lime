@@ -146,7 +146,7 @@
             </EditFormSettings>
 
             
-            <CommandItemSettings AddNewRecordText="Добавить параметр"></CommandItemSettings>
+            <CommandItemSettings AddNewRecordText="Добавить клиента"></CommandItemSettings>
         </MasterTableView>
         <ClientSettings>
             <ClientEvents OnRowDblClick="RowDblClick"></ClientEvents>
