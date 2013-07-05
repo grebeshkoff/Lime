@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace LimeTest.Data.Source
 {
     [TestFixture]
-    internal class SourceTest
+    internal partial class SourceOperationTest
     {
         [Test]
         public void GenderTest()
@@ -61,15 +61,6 @@ namespace LimeTest.Data.Source
                 {
                     Console.WriteLine("{0} : {1} : {2}", param.Person.FullName, param.Name, param.Value);
                 }
-            }
-        }
-
-        [Test]
-        public void PersonParametersTest()
-        {
-            using (var db = new LimeDataBase())
-            {
-
             }
         }
 

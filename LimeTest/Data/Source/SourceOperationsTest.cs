@@ -1,18 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Lime;
+using Lime.Data.Source;
 using NUnit.Framework;
 
 namespace LimeTest.Data.Source
 {
     [TestFixture]
-    class SourceCrudTest
+    internal partial class SourceOperationTest
     {
         [Test]
         public void DeleteParameterTest ()
         {
-
+            using (var db = new LimeDataBase())
+            {
+                db.DeleteParameter(12);
+            }
         }
 
         [Test]

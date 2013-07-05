@@ -77,7 +77,12 @@ namespace Lime.Data.Source
 
         public void DeleteParameter(int id)
         {
-
+            BeginTransaction();
+                DeleteLookupValuesSet(id);
+                SetCommand("DELETE FROM Params WHERE ParamId = @id",
+                            Parameter("@id", id))
+                        .ExecuteNonQuery();
+            CommitTransaction();
         }
 #endregion
 
