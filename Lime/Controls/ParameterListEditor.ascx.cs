@@ -12,19 +12,12 @@ namespace Lime.Controls
 {
     public partial class ParameterListEditor : System.Web.UI.UserControl
     {
-        //private int PersonId { get; set; }
-
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if(!Page.IsPostBack)
-            //    ForceBinding();
         }
 
         protected void Page_PreRender(object sender, EventArgs e)
         {
-            //ViewState["PersonId"] = 0;
-            //if(!IsPostBack)
-                
         }
 
         public void ForceBinding()
@@ -79,20 +72,12 @@ namespace Lime.Controls
 
         protected void ParametersGrid_ItemDataBound(object sender, GridItemEventArgs e)
         {
-            //if (e.Item is GridEditableItem && (e.Item as GridEditableItem).IsInEditMode)
-            //{
-            //    var editedItem = e.Item as GridEditableItem;
-            //    var editMan = editedItem.EditManager;
-            //    var editor = editMan.GetColumnEditor("ParameterType") as GridDropDownColumnEditor;
-            //    if (editor != null)
-            //    {
-            //        editor.DataSource = new object[] {"Текст", "Подстановка"};
-            //        editor.DataBind();
-            //    }
-            //}
             if (e.Item is GridEditFormInsertItem || e.Item is GridDataInsertItem)
             {
-                
+                //var editedItem = e.Item as GridEditableItem;
+                //var editMan = editedItem.EditManager;
+                //var editor = editMan.GetColumnEditor("ParameterType");
+
             }
         }
 
@@ -107,37 +92,46 @@ namespace Lime.Controls
             var list = type.Parent.FindControl("AddParamLable");
             var label = type.Parent.FindControl("AddParamListBox");
             var text = type.Parent.FindControl("AddParamTextBox");
+            var add = type.Parent.FindControl("AddValueButton");
+            var delete = type.Parent.FindControl("DeleteValueButton");
 
             if (type.SelectedValue == "Text")
             {
                 list.Visible = false;
                 label.Visible = false;
                 text.Visible = false;
+                add.Visible = false;
+                delete.Visible = false;
             }
             else
             {
                 list.Visible = true;
                 label.Visible = true;
                 text.Visible = true;
+                add.Visible = true;
+                delete.Visible = true;
             }
         }
 
         protected void ParametersGrid_InsertCommand(object sender, GridCommandEventArgs e)
         {
-            ForceBinding();
-            //var gridEditFormItem = e.Item as GridEditFormItem ?? ((GridDataItem)(e.Item)).EditFormItem;
-            //if (gridEditFormItem != null)
-            //{
-            //    var dropDown = gridEditFormItem.FindControl("ParamTypeDropDownList") as DropDownList;
-            //    dropDown.SelectedValue = "Text";
 
-            //    var list = gridEditFormItem.FindControl("AddParamLable");
-            //    var label = gridEditFormItem.FindControl("AddParamListBox");
+        }
 
-                
-            //        list.Visible = false;
-            //        label.Visible = false;
-            //}
+        protected void AddValueButton_Click(object sender, EventArgs e)
+        {
+            var btn = sender as RadButton;
+            var newValue = btn.Parent.FindControl("AddParamTextBox") as RadTextBox;
+            var list = btn.Parent.FindControl("AddParamListBox") as RadListBox;
+            list.Items.Add(new RadListBoxItem(newValue.Text));
+            newValue.Text = "";
+        }
+
+        protected void DeleteValueButton_Click(object sender, EventArgs e)
+        {
+            var btn = sender as RadButton;
+            var list = btn.Parent.FindControl("AddParamListBox") as RadListBox;
+            list.Items.Remove(list.SelectedItem);
         }
     }
 }

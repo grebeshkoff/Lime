@@ -151,6 +151,14 @@
                                             Width="200" 
                                             Visible="False">
                                         </telerik:RadTextBox>
+                                        <telerik:RadButton 
+                                            runat="server" 
+                                            ID="AddValueButton"
+                                            Width="26"
+                                            Text=" + "
+                                            Visible="False"
+                                            OnClick="AddValueButton_Click">
+                                        </telerik:RadButton>
                                     </div>
                                     <div>
                                         <telerik:RadListBox 
@@ -158,8 +166,14 @@
                                             ID="AddParamListBox" 
                                             Width="200" 
                                             Height="150" 
-                                            Visible="False">
-                                        </telerik:RadListBox>
+                                            Visible="False" />
+                                        <telerik:RadButton 
+                                            runat="server" 
+                                            ID="DeleteValueButton"
+                                            Width="26"
+                                            Text=" - " 
+                                            Visible="False"
+                                            OnClick="DeleteValueButton_Click"/>
                                     </div>
 
                                 </td>
