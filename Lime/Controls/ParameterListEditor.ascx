@@ -38,6 +38,7 @@
             OnItemDataBound="ParametersGrid_ItemDataBound"
             OnDeleteCommand="ParametersGrid_DeleteCommand"
             OnInsertCommand="ParametersGrid_InsertCommand"
+            OnUpdateCommand="ParametersGrid_UpdateCommand"
             OnNeedDataSource="ParametersGrid_NeedDataSource"
 
             AllowFilteringByColumn="False"
@@ -69,7 +70,10 @@
                         DataField="Type"
                         ReadOnly="True">
                         <ItemTemplate>
-                            <asp:Image ID="TypeImage" runat="server" ImageUrl='<%# String.Format("../Theme/Images/ui{0}.png", Eval("Type")) %>' />
+                            <asp:Image 
+                                ID="TypeImage" 
+                                runat="server" 
+                                ImageUrl='<%# String.Format("../Theme/Images/ui{0}.png", Eval("Type")) %>' />
                         </ItemTemplate>
                     </telerik:GridTemplateColumn>
 
@@ -117,7 +121,12 @@
                                     Название параментра
                                 </td>
                                 <td>
-                                    <telerik:RadTextBox runat="server" ID="ParamNameTextBox" Text='<%# Bind("Name") %>' Width="200"></telerik:RadTextBox>
+                                    <telerik:RadTextBox 
+                                        runat="server" 
+                                        ID="ParamNameTextBox" 
+                                        Text='<%# Bind("Name") %>' 
+                                        Width="200">
+                                    </telerik:RadTextBox>
                                 </td>
                             </tr>
                             <tr>
@@ -140,7 +149,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <td style="vertical-align: top">
                                     <asp:Label runat="server" ID="AddParamLable" Text="Список значений" Visible="False"></asp:Label>
                                 </td>
                                 <td>

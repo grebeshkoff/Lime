@@ -74,10 +74,37 @@ namespace Lime.Controls
         {
             if (e.Item is GridEditFormInsertItem || e.Item is GridDataInsertItem)
             {
-                //var editedItem = e.Item as GridEditableItem;
-                //var editMan = editedItem.EditManager;
-                //var editor = editMan.GetColumnEditor("ParameterType");
+                var type = e.Item.FindControl("ParamTypeDropDownList") as RadDropDownList;
+                type.SelectedValue = ParameterType.Lookup.ToString();
+                SetParamFiedsVisibility(e.Item);
 
+            }
+        }
+
+        private void SetParamFiedsVisibility(GridItem item)
+        {
+            var type = item.FindControl("ParamTypeDropDownList") as DropDownList;
+            var list = type.Parent.FindControl("AddParamLable");
+            var label = type.Parent.FindControl("AddParamListBox");
+            var text = type.Parent.FindControl("AddParamTextBox");
+            var add = type.Parent.FindControl("AddValueButton");
+            var delete = type.Parent.FindControl("DeleteValueButton");
+
+            if (type.SelectedValue == "Text")
+            {
+                list.Visible = false;
+                label.Visible = false;
+                text.Visible = false;
+                add.Visible = false;
+                delete.Visible = false;
+            }
+            else
+            {
+                list.Visible = true;
+                label.Visible = true;
+                text.Visible = true;
+                add.Visible = true;
+                delete.Visible = true;
             }
         }
 
@@ -118,13 +145,9 @@ namespace Lime.Controls
 
         }
 
-        protected void AddValueButton_Click(object sender, EventArgs e)
+        protected void ParametersGrid_UpdateCommand(object sender, GridCommandEventArgs e)
         {
-            var btn = sender as RadButton;
-            var newValue = btn.Parent.FindControl("AddParamTextBox") as RadTextBox;
-            var list = btn.Parent.FindControl("AddParamListBox") as RadListBox;
-            list.Items.Add(new RadListBoxItem(newValue.Text));
-            newValue.Text = "";
+            throw new NotImplementedException();
         }
 
         protected void DeleteValueButton_Click(object sender, EventArgs e)
@@ -132,6 +155,24 @@ namespace Lime.Controls
             var btn = sender as RadButton;
             var list = btn.Parent.FindControl("AddParamListBox") as RadListBox;
             list.Items.Remove(list.SelectedItem);
+        }
+
+        protected void AddValueButton_Click(object sender, EventArgs e)
+        {
+            var btn = sender as RadButton;
+            var newValue = btn.Parent.FindControl("AddParamTextBox") as RadTextBox;
+            var list = btn.Parent.FindControl("AddParamListBox") as RadListBox;
+
+            if (newValue.Text != "")
+            {
+                foreach (RadListBoxItem item in list.Items)
+                {
+                    if(item.Text == newValue.Text)
+                        return;
+                }
+                list.Items.Add(new RadListBoxItem(newValue.Text));
+                newValue.Text = "";
+            }
         }
     }
 }

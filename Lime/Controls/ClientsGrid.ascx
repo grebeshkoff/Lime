@@ -42,8 +42,6 @@
     
     <telerik:RadGrid
         Skin="Silk" 
-
-        
         ID="ClientsRadGrid" 
         runat="server" 
         OnNeedDataSource="ClientsRadGrid_NeedDataSource"
@@ -86,15 +84,6 @@
             <Columns>
                 <telerik:GridClientSelectColumn UniqueName="ClientSelectColumn">
                 </telerik:GridClientSelectColumn>
-                
-                <%--<telerik:GridTemplateColumn UniqueName="CheckBoxTemplateColumn">
-                <ItemTemplate>
-                  <asp:CheckBox ID="CheckBox1" runat="server" OnCheckedChanged="ToggleRowSelection"
-                    AutoPostBack="True" />
-                </ItemTemplate>
-                <HeaderTemplate>
-                </HeaderTemplate>
-              </telerik:GridTemplateColumn>--%>
                 
                 <telerik:GridBoundColumn 
                     UniqueName="Id" 
@@ -155,7 +144,6 @@
         </MasterTableView>
         <ClientSettings>
             <ClientEvents OnRowDblClick="RowDblClick"></ClientEvents>
-           
         </ClientSettings>
     </telerik:RadGrid>
 
