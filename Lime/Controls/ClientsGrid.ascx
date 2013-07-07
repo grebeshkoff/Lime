@@ -1,5 +1,13 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ClientsGrid.ascx.cs" Inherits="Lime.Controls.ClientsGrid" %>
 
+
+ 
+    <style type="text/css">      
+       div.RadGrid .rgPager .rgAdvPart     
+       {     
+        display:none;        
+       }      
+    </style>  
     <telerik:RadCodeBlock ID="RadCodeBlock1" runat="server">
         <script type="text/javascript">
             function RowDblClick(sender, eventArgs) {
@@ -55,16 +63,13 @@
         AllowPaging="True" 
         AutoGenerateColumns="False"
         EnableHeaderContextFilterMenu="true" 
-        EnableHeaderContextMenu="true"
-        EnableAJAX="True" 
-        
-        >
+        EnableHeaderContextMenu="true">
         
         <ClientSettings EnableRowHoverStyle="true">
             <Selecting AllowRowSelect="True"></Selecting>
         </ClientSettings>
         
-        <PagerStyle Mode="NextPrevAndNumeric"></PagerStyle>
+        <PagerStyle Mode="NextPrevAndNumeric" PageSizes="15"></PagerStyle>
 
 
         <MasterTableView 

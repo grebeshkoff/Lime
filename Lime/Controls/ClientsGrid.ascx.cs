@@ -29,7 +29,7 @@ namespace Lime.Controls
 
         protected void ClientsRadGrid_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            using (var db = new LimeDataBase())
+            using (var db = new LimeDataBase(HttpContext.Current))
             {
                 ClientsRadGrid.DataSource = db.Persons.OrderByDescending(person => person.Id);
             }
@@ -38,7 +38,7 @@ namespace Lime.Controls
 
         protected void ClientsRadGrid_ItemDataBound(object sender, GridItemEventArgs e)
         {
-            using (var db = new LimeDataBase())
+            using (var db = new LimeDataBase(HttpContext.Current))
             {
                 if (e.Item is GridDataItem && !e.Item.IsInEditMode)
                 {
@@ -79,19 +79,13 @@ namespace Lime.Controls
         {
             try
             {
-                using (var db = new LimeDataBase())
+                using (var db = new LimeDataBase(HttpContext.Current))
                 {
                     //var item = (GridDataItem)e.Item;
                     var personId = e.Item.OwnerTableView.DataKeyValues[e.Item.ItemIndex]["Id"].ToString();
                     int id = Int32.Parse(personId);
-                    var person = db.GetPersonById(id);
-
-                    db.BeginTransaction();
-
-                    LogOperation(person, db, "Delete");
+                    //var person = db.GetPersonById(id);
                     db.DeletePerson(id);
-                    db.CommitTransaction();
-
                 }
             }
             catch (Exception ex)
@@ -100,20 +94,7 @@ namespace Lime.Controls
             }
         }
 
-        private static void LogOperation(Person person, LimeDataBase db, string operation)
-        {
-            var rec = new Log
-                {
-                    IpAddress = HttpContext.Current.Request.UserHostAddress,
-                    LodOperation = operation,
-                    PersonName = person.FullName,
-                    User = HttpContext.Current.User.Identity.Name,
-                    Language = HttpContext.Current.Request.UserLanguages[0] ?? "Undefined",
-                    Time = DateTime.Now
 
-                };
-            db.AddLog(rec);
-        }
 
         protected void ClientsRadGrid_InsertCommand(object sender, GridCommandEventArgs e)
         {
@@ -136,10 +117,9 @@ namespace Lime.Controls
                         GenderId = Int32.Parse(gender)
                     };
 
-                using (var db = new LimeDataBase())
+                using (var db = new LimeDataBase(HttpContext.Current))
                 {
                     db.BeginTransaction();
-                    LogOperation(person, db, "Insert");
                     db.AddPerson(person);
                     db.CommitTransaction();
                 }
@@ -173,12 +153,12 @@ namespace Lime.Controls
                     var userControl = Parent.FindControl("MainUserEditControl") as UserFormEditor;
                     if (userControl == null)
                     {
-                        var userControl1 = Parent.FindControl("MainParamEditControl") as ParameterFormEditor;
+                        var userControl1 = Parent.FindControl("MainParamEditControl") as ParameterListEditor;
                         userControl1.ForceBinding(Int32.Parse(person));
                     }
                     else
                     {
-                        userControl.ForeceRebind(Int32.Parse(person));
+                        userControl.ForceRebind(Int32.Parse(person));
                     }
 
 
@@ -218,10 +198,9 @@ namespace Lime.Controls
                         GenderId = Int32.Parse(gender)
                     };
 
-                using (var db = new LimeDataBase())
+                using (var db = new LimeDataBase(HttpContext.Current))
                 {
                     db.BeginTransaction();
-                    LogOperation(person, db, "Update");
                     db.UpdatePerson(person);
                     db.CommitTransaction();
                 }
@@ -233,17 +212,6 @@ namespace Lime.Controls
             }
         }
 
-        //protected void ToggleRowSelection(object sender, EventArgs e)
-        //{
-        //    ((sender as CheckBox).NamingContainer as GridItem).Selected = (sender as CheckBox).Checked;
 
-        //    foreach (GridDataItem dataItem in ClientsRadGrid.MasterTableView.Items)
-        //    {
-        //        if (!(dataItem.FindControl("CheckBox1") is CheckBox))
-        //        {
-                    
-        //        }
-        //    }
-        //}
     }
 }

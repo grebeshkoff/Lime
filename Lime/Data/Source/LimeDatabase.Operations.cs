@@ -33,9 +33,16 @@ namespace Lime.Data.Source
 
         public Person GetPersonById(int id)
         {
-            return (from p in Persons
-                    where p.Id == id
-                    select p).First();
+            try
+            {
+                return (from p in Persons
+                        where p.Id == id
+                        select p).First();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public Person GetPersonByCode(string code)
@@ -47,7 +54,8 @@ namespace Lime.Data.Source
 
         public int AddPerson(Person person)
         {
-            return SetCommand(@"
+            BeginTransaction();
+            var identity =  SetCommand(@"
                         INSERT INTO Persons
                             ( PersonCode,  PersonFullName,  PersonGender)
                         VALUES
@@ -55,11 +63,15 @@ namespace Lime.Data.Source
                         SELECT Cast(SCOPE_IDENTITY() as int)",
                         CreateParameters(person))
                     .ExecuteScalar<int>();
+            LogOperation(person, "Insert");
+            CommitTransaction();
+            return identity;
         }
 
         public int UpdatePerson(Person person)
         {
-            return SetCommand(@"
+            BeginTransaction();
+            int identity = SetCommand(@"
                         UPDATE
                             Persons
                         SET
@@ -69,31 +81,35 @@ namespace Lime.Data.Source
                         WHERE
                             PersonId = @PersonId",
             CreateParameters(person)).ExecuteNonQuery();
+            LogOperation(person, "Update");
+            CommitTransaction();
+            return identity;
         }
 
         public void DeletePerson(int id)
         {
 
             var q = (from p in Parameters
-                     where p.PersonId == id && p.Type == ParameterType.Lookup
+                     where p.PersonId == id
                      select p);
-            var peson = GetPersonById(id);
+            var person = GetPersonById(id);
 
+            BeginTransaction();
             SetCommand("DELETE FROM Persons WHERE PersonId = @id",
                 Parameter("@id", id))
                     .ExecuteNonQuery();
 
-
+            
             if (q.Any())
             {
-                var lookupParam = q.First();
-
-                SetCommand("DELETE FROM ParamValues WHERE ParamId = @id",
-                           Parameter("@id", lookupParam.Id)).ExecuteNonQuery();
+                foreach (var parameter in q)
+                {
+                    DeleteParameter(parameter);
+                }
             }
+            LogOperation(person, "Delete");
+            CommitTransaction();
 
-            SetCommand("DELETE FROM Params WHERE ParamPersonId = @id",
-               Parameter("@id", id)).ExecuteNonQuery();
         }
 
         public void DeletePerson(Person person)
@@ -106,9 +122,16 @@ namespace Lime.Data.Source
 
         public List<Parameter> GetParametersByPerson(Person person)
         {
-            return (from param in Parameters
-                    where param.PersonId == person.Id
-                    select param).ToList();
+            if (person != null)
+            {
+                return (from param in Parameters
+                        where param.PersonId == person.Id
+                        select param).ToList();
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public int  AddParameter(Parameter parameter)
@@ -170,7 +193,7 @@ namespace Lime.Data.Source
             DeleteParameter(param.Id);
         }
 
-        #endregion
+#endregion
 
 #region * LookupValue Methods *
         public int  AddLookupValue(LookupValue value)
@@ -217,6 +240,21 @@ namespace Lime.Data.Source
                         SELECT Cast(SCOPE_IDENTITY() as int)",
                         CreateParameters(record))
                     .ExecuteScalar<int>();
+        }
+
+        private void LogOperation(Person person, string operation)
+        {
+            var rec = new Log
+            {
+                IpAddress = _context != null ? (_context.Request.UserHostAddress).Replace("::1", "localhost") : "localhost",
+                LodOperation = operation,
+                PersonName = person.FullName,
+                User = _context != null ? _context.User.Identity.Name : "Unknown",
+                Language = _context != null ? (_context.Request.UserLanguages[0] ?? "Undefined") : "Undefined",
+                Time = DateTime.Now
+
+            };
+            AddLog(rec);
         }
 
 #endregion

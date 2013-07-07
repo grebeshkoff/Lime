@@ -2,7 +2,7 @@
 
 
 
-<%@ Register src="Controls/ParameterFormEditor.ascx" tagName="ParameterFormEditor" tagPrefix="param" %>
+<%@ Register src="Controls/ParameterListEditor.ascx" tagName="ParameterListEditor" tagPrefix="param" %>
 <%@ Register src="Controls/ClientsGrid.ascx" tagName="ClientsGrid" tagPrefix="list" %>
 
 <asp:Content ID="Content1" runat="server" ContentPlaceHolderID="PlaceHolderMain">
@@ -16,13 +16,13 @@
             <telerik:AjaxSetting AjaxControlID="MainClientsGridControl">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="MainClientsGridControl" LoadingPanelID="GridLoadingPanel"/>
-                    <telerik:AjaxUpdatedControl ControlID="MainUserEditControl" LoadingPanelID="ControlLoadingPanel"/>
+                    <telerik:AjaxUpdatedControl ControlID="MainParamEditControl" LoadingPanelID="ControlLoadingPanel"/>
                 </UpdatedControls>
             </telerik:AjaxSetting>
 
-            <telerik:AjaxSetting AjaxControlID="MainUserEditControl">
+            <telerik:AjaxSetting AjaxControlID="MainParamEditControl">
                 <UpdatedControls>
-                    <telerik:AjaxUpdatedControl ControlID="MainUserEditControl" LoadingPanelID="ControlLoadingPanel"/>
+                    <telerik:AjaxUpdatedControl ControlID="MainParamEditControl" LoadingPanelID="ControlLoadingPanel"/>
                 </UpdatedControls>
             </telerik:AjaxSetting>
         </AjaxSettings>
@@ -38,7 +38,7 @@
             </td>
             <td style="vertical-align: top;">
                 <telerik:RadAjaxLoadingPanel ID="ControlLoadingPanel" runat="server" />
-                <param:ParameterFormEditor runat="server" ID="MainParamEditControl" />
+                <param:ParameterListEditor runat="server" ID="MainParamEditControl" />
             </td>
         </tr>
     </table>

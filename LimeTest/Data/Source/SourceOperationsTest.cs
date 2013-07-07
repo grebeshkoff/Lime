@@ -14,7 +14,7 @@ namespace LimeTest.Data.Source
         {
             using (var db = new LimeDataBase())
             {
-                db.DeleteParameter(12);
+                db.DeleteParameter(500);
             }
         }
 

@@ -26,7 +26,7 @@ namespace Lime
             string username = UserLogin.UserName;
             string pwd = UserLogin.Password;
 
-            using (var db = new LimeDataBase())
+            using (var db = new LimeDataBase(HttpContext.Current))
             {
                 var query = (from user in db.Users
                              where user.Name == username

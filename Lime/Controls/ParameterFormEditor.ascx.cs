@@ -64,7 +64,7 @@ namespace Lime.Controls
             }
 
             ViewState["PersonId"] = personId;
-            using (var db = new LimeDataBase())
+            using (var db = new LimeDataBase(HttpContext.Current))
             {
                 var person = db.GetPersonById(personId);
                 FullNameLabel.Text = person.FullName;
@@ -107,7 +107,7 @@ namespace Lime.Controls
         {
             try
             {
-                using (var db = new LimeDataBase())
+                using (var db = new LimeDataBase(HttpContext.Current))
                 {
 
                     int paramId=
@@ -149,7 +149,7 @@ namespace Lime.Controls
         {
            try
            {
-               using (var db = new LimeDataBase())
+               using (var db = new LimeDataBase(HttpContext.Current))
                {
                    db.DeleteLookupValue(Int32.Parse(LookupList.SelectedItem.Value));
                }
@@ -164,7 +164,7 @@ namespace Lime.Controls
 
         protected void SaveParameterClick(object sender, EventArgs e)
         {
-            using (var db = new LimeDataBase())
+            using (var db = new LimeDataBase(HttpContext.Current))
             {
                 
                 if (TextParameterName.Text == "")

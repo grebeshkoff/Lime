@@ -15,17 +15,17 @@ namespace Lime.Controls
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            ForeceRebind();
+            ForceRebind();
         }
 
-        public void ForeceRebind()
+        public void ForceRebind()
         {
-                ForeceRebind(ViewState["PersonId"]!=null? Int32.Parse(ViewState["PersonId"].ToString()):0);
+                ForceRebind(ViewState["PersonId"]!=null? Int32.Parse(ViewState["PersonId"].ToString()):0);
         }
 
-        public void ForeceRebind(int userId)
+        public void ForceRebind(int userId)
         {
-            using (var db = new LimeDataBase())
+            using (var db = new LimeDataBase(HttpContext.Current))
             {
                 var paramDictionary = new Dictionary<int, string>();
                 if (userId == 0)
@@ -84,7 +84,7 @@ namespace Lime.Controls
                     {
                         var lookupControl = new RadDropDownList();
 
-                        using (var db1 = new LimeDataBase())
+                        using (var db1 = new LimeDataBase(HttpContext.Current))
                         {
                             var param1 = param;
                             var list = from vals in db1.LookupValues
@@ -143,7 +143,7 @@ namespace Lime.Controls
                             paramValue = tb.SelectedText;
                         }
                     }
-                    using (var db = new LimeDataBase())
+                    using (var db = new LimeDataBase(HttpContext.Current))
                     {
                         db.UpdateParameterValue(paramId, paramValue);
                     }
@@ -154,7 +154,7 @@ namespace Lime.Controls
 
         protected void CancelButton_Click(object sender, EventArgs e)
         {
-            ForeceRebind();
+            ForceRebind();
         }
     }
 }
