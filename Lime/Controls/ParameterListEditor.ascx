@@ -145,18 +145,17 @@
                                 </td>
                                 <td>
                                     <div>
-                                        <telerik:RadListBox 
+                                        <telerik:RadTextBox 
                                             runat="server" 
-                                            ID="AddParamListBox" 
+                                            ID="AddParamTextBox" 
                                             Width="200" 
-                                            Height="150" 
                                             Visible="False">
-                                        </telerik:RadListBox>
+                                        </telerik:RadTextBox>
                                     </div>
                                     <div>
                                         <telerik:RadListBox 
                                             runat="server" 
-                                            ID="RadListBox1" 
+                                            ID="AddParamListBox" 
                                             Width="200" 
                                             Height="150" 
                                             Visible="False">

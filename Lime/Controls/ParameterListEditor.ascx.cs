@@ -106,17 +106,19 @@ namespace Lime.Controls
             var type = sender as DropDownList;
             var list = type.Parent.FindControl("AddParamLable");
             var label = type.Parent.FindControl("AddParamListBox");
+            var text = type.Parent.FindControl("AddParamTextBox");
 
             if (type.SelectedValue == "Text")
             {
                 list.Visible = false;
                 label.Visible = false;
+                text.Visible = false;
             }
             else
             {
                 list.Visible = true;
                 label.Visible = true;
-
+                text.Visible = true;
             }
         }
 
