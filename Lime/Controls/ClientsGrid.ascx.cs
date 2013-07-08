@@ -119,9 +119,7 @@ namespace Lime.Controls
 
                 using (var db = new LimeDataBase(HttpContext.Current))
                 {
-                    db.BeginTransaction();
                     db.AddPerson(person);
-                    db.CommitTransaction();
                 }
 
             }

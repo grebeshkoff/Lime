@@ -18,19 +18,19 @@ namespace Lime.Data.Source
     public partial class LimeDataBase: DbManager
     {
         //Todo For debug
-        //private const string WorkConnectionString = @"Data Source=CO-PRG-05\SHAREPOINT;Initial Catalog=LIMEBASE;Integrated Security=True";
+        private const string WorkConnectionString = @"Data Source=CO-PRG-05\SHAREPOINT;Initial Catalog=LIMEBASE;Integrated Security=True";
         private const string HomeConnectionString = @"Server=MAIN-PC\MAINPCSQL;Database=LIMEBASE;Integrated Security=SSPI";
 
         private readonly HttpContext _context;
 #region * Tables *
         public LimeDataBase()
-            : base(new SqlConnection(HomeConnectionString))
+            : base(new SqlConnection(WorkConnectionString))
         {
 
         }
 
         public LimeDataBase(HttpContext ctx)
-            : base(new SqlConnection(HomeConnectionString))
+            : base(new SqlConnection(WorkConnectionString))
         {
             _context = ctx;
         }

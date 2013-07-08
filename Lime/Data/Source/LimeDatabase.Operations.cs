@@ -258,5 +258,19 @@ namespace Lime.Data.Source
         }
 
 #endregion
+
+        public Parameter GetParameterById(int paramId)
+        {
+            return (from p in Parameters
+                    where p.Id == paramId
+                    select p).First();
+        }
+
+        public List<LookupValue> GetParameterValues(int paramId)
+        {
+            return (from value in LookupValues
+                    where value.ParamterId == paramId
+                    select value).ToList();
+        }
     }
 }

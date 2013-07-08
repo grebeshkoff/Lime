@@ -74,11 +74,34 @@ namespace Lime.Controls
         {
             if (e.Item is GridEditFormInsertItem || e.Item is GridDataInsertItem)
             {
-                var type = e.Item.FindControl("ParamTypeDropDownList") as RadDropDownList;
-                type.SelectedValue = ParameterType.Lookup.ToString();
-                SetParamFiedsVisibility(e.Item);
-
+                var type = e.Item.FindControl("ParamTypeDropDownList") as DropDownList;
+                type.SelectedValue = ParameterType.Text.ToString();
             }
+
+            if (e.Item is GridEditableItem && (e.Item as GridEditableItem).IsInEditMode && (e.Item.ItemIndex != -1))
+            {
+                var editedItem = e.Item as GridEditableItem;
+                var type = e.Item.FindControl("ParamTypeDropDownList") as DropDownList;
+                var paramId = Int32.Parse(e.Item.OwnerTableView.DataKeyValues[e.Item.ItemIndex]["Id"].ToString());
+                using (var db = new LimeDataBase(HttpContext.Current))
+                {
+                    var param = db.GetParameterById(paramId);
+                    type.SelectedValue = param.Type.ToString();
+                    SetParamFiedsVisibility(editedItem);
+                    if (param.Type == ParameterType.Lookup)
+                    {
+                        var list = e.Item.FindControl("AddParamListBox") as RadListBox;
+                        list.Items.Clear();
+                        var values = db.GetParameterValues(paramId);
+                        foreach (var lookupValue in values)
+                        {
+                            list.Items.Add(new RadListBoxItem(lookupValue.Value));
+                        }
+                    }
+
+                }
+            }
+
         }
 
         private void SetParamFiedsVisibility(GridItem item)
@@ -142,12 +165,45 @@ namespace Lime.Controls
 
         protected void ParametersGrid_InsertCommand(object sender, GridCommandEventArgs e)
         {
+            var insertedItem = (GridEditFormInsertItem)e.Item;
+            var name = insertedItem.FindControl("ParamNameTextBox") as RadTextBox;
+            var type = insertedItem.FindControl("ParamTypeDropDownList") as DropDownList;
+
+            if(name.Text != "")
+            {
+                using (var db = new LimeDataBase(HttpContext.Current))
+                {
+                    db.BeginTransaction();
+                    var parameter = new Parameter
+                        {
+                            Name = name.Text,
+                            Type = (type.SelectedValue == "Text") ? ParameterType.Text : ParameterType.Lookup,
+                            PersonId = Int32.Parse(ViewState["PersonId"].ToString()),
+                            Value = "NaN"
+                        };
+                    parameter.Id = db.AddParameter(parameter);
+                    if (parameter.Type == ParameterType.Lookup)
+                    {
+                        var list = insertedItem.FindControl("AddParamListBox") as RadListBox;
+                        foreach (RadListBoxItem item in list.Items)
+                        {
+                            var lv = new LookupValue
+                                {
+                                    ParamterId = parameter.Id,
+                                    Value = item.Text
+                                };
+                            db.AddLookupValue(lv);
+                        }
+                    }
+                    db.CommitTransaction();
+                }
+            }
 
         }
 
         protected void ParametersGrid_UpdateCommand(object sender, GridCommandEventArgs e)
         {
-            throw new NotImplementedException();
+
         }
 
         protected void DeleteValueButton_Click(object sender, EventArgs e)
@@ -167,7 +223,7 @@ namespace Lime.Controls
             {
                 foreach (RadListBoxItem item in list.Items)
                 {
-                    if(item.Text == newValue.Text)
+                    if (item.Text == newValue.Text)
                         return;
                 }
                 list.Items.Add(new RadListBoxItem(newValue.Text));
