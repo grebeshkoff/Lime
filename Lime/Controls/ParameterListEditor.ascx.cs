@@ -133,7 +133,12 @@ namespace Lime.Controls
 
         protected void ParametersGrid_DeleteCommand(object sender, GridCommandEventArgs e)
         {
-
+            var editedItem = e.Item as GridEditableItem;
+            var paramId = Int32.Parse(e.Item.OwnerTableView.DataKeyValues[e.Item.ItemIndex]["Id"].ToString());
+            using (var db = new LimeDataBase(HttpContext.Current))
+            {
+                db.DeleteParameter(paramId);
+            }
         }
 
         protected void ParamTypeDropDownList_SelectedIndexChanged(object sender, EventArgs e)
@@ -203,7 +208,43 @@ namespace Lime.Controls
 
         protected void ParametersGrid_UpdateCommand(object sender, GridCommandEventArgs e)
         {
+            var editedItem = e.Item as GridEditableItem;
+            var paramId = Int32.Parse(e.Item.OwnerTableView.DataKeyValues[e.Item.ItemIndex]["Id"].ToString());
 
+            var name = editedItem.FindControl("ParamNameTextBox") as RadTextBox;
+            var type = editedItem.FindControl("ParamTypeDropDownList") as DropDownList;
+
+            if (name.Text != "")
+            {
+                using (var db = new LimeDataBase(HttpContext.Current))
+                {
+                    db.BeginTransaction();
+                    db.DeleteLookupValuesSet(paramId);
+                    var parameter = new Parameter
+                    {
+                        Id = paramId,
+                        Name = name.Text,
+                        Type = (type.SelectedValue == "Text") ? ParameterType.Text : ParameterType.Lookup,
+                        PersonId = Int32.Parse(ViewState["PersonId"].ToString()),
+                        Value = "NaN"
+                    };
+                    db.UpdateParameter(parameter);
+                    if (parameter.Type == ParameterType.Lookup)
+                    {
+                        var list = editedItem.FindControl("AddParamListBox") as RadListBox;
+                        foreach (RadListBoxItem item in list.Items)
+                        {
+                            var lv = new LookupValue
+                            {
+                                ParamterId = parameter.Id,
+                                Value = item.Text
+                            };
+                            db.AddLookupValue(lv);
+                        }
+                    }
+                    db.CommitTransaction();
+                }
+            }
         }
 
         protected void DeleteValueButton_Click(object sender, EventArgs e)
